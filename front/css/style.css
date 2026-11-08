@@ -1,0 +1,206 @@
+/* ===== CORES DO SITE =====
+   azul-marinho:  #0B1F3A
+   azul-claro:    #8EC5E8
+   azul-médio:    #4A8DBF
+   fundo claro:   #F2F7FB
+*/
+
+/* ===== GERAL ===== */
+body {
+    margin: 0;
+    font-family: 'Lato', Arial, sans-serif;
+    background-color: #F2F7FB;
+    color: #0B1F3A;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ===== MENU ===== */
+.menu {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+    border-bottom: 1px solid #DCE7F0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px;
+    font-weight: bold;
+    color: #0B1F3A;
+    text-decoration: none;
+}
+
+.logo-batimento {
+    width: 60px;
+    height: 24px;
+}
+
+.logo-batimento polyline {
+    fill: none;
+    stroke: #4A8DBF;
+    stroke-width: 2;
+}
+
+.logo-batimento path {
+    fill: #4A8DBF;
+}
+
+.menu-links a {
+    color: #0B1F3A;
+    text-decoration: none;
+    margin-left: 22px;
+    font-size: 15px;
+}
+
+.menu-links a:hover {
+    color: #4A8DBF;
+}
+
+.botao-entrar {
+    background-color: #0B1F3A;
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+
+/* ===== TOPO COM A TORRE ===== */
+.topo {
+    background-image: linear-gradient(to right, rgba(11, 31, 58, 0.95) 0%, rgba(11, 31, 58, 0.6) 50%, rgba(11, 31, 58, 0.1) 100%), url("../assets/imgs/torre.jpg");
+    background-size: cover;
+    background-position: center;
+    margin: 20px 40px;
+    border-radius: 20px;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+}
+
+.topo-texto {
+    max-width: 520px;
+    color: white;
+}
+
+.topo h1 {
+    font-size: 60px;
+    margin: 0 0 10px 0;
+}
+
+.topo-frase {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    color: #8EC5E8;
+    margin: 0 0 16px 0;
+}
+
+.topo p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* ===== BOTÕES ===== */
+.botao {
+    display: inline-block;
+    background-color: #0B1F3A;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.botao:hover {
+    background-color: #4A8DBF;
+}
+
+.topo .botao {
+    background-color: white;
+    color: #0B1F3A;
+}
+
+.topo .botao:hover {
+    background-color: #8EC5E8;
+}
+
+/* ===== SEÇÕES ===== */
+.secao {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.secao h2 {
+    font-size: 34px;
+    margin-top: 0;
+}
+
+.secao p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.secao-clara {
+    background-color: white;
+    border-radius: 20px;
+}
+
+/* ===== CARTÕES DE TEXTO ===== */
+.cartoes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.cartao {
+    background-color: #F2F7FB;
+    border-top: 5px solid #4A8DBF;
+    border-radius: 12px;
+    padding: 20px;
+    width: 210px;
+}
+
+/* ===== CARTÕES DE PERSONAGEM ===== */
+.cartao-personagem {
+    background-color: white;
+    border-radius: 16px;
+    padding: 12px;
+    width: 150px;
+    box-shadow: 0 4px 12px rgba(11, 31, 58, 0.1);
+}
+
+.cartao-personagem img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.cartao-personagem h3 {
+    font-size: 16px;
+    margin: 10px 0 4px 0;
+}
+
+.cartao-personagem p {
+    font-size: 14px;
+    color: #4A8DBF;
+    margin: 0;
+}
+
+/* ===== FRASE ESCRITA À MÃO ===== */
+.secao .frase-escrita {
+    font-family: 'Caveat', cursive;
+    font-size: 34px;
+    color: #4A8DBF;
+}
