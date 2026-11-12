@@ -214,3 +214,72 @@ h1, h2, h3 {
     font-size: 34px;
     color: #0D47A1;
 }
+
+/* ===== PLAYLIST DE MÚSICAS ===== */
+.playlist {
+    background-color: #061A40;
+    border-radius: 20px;
+    padding: 24px 30px;
+    max-width: 720px;
+    margin: 30px auto 0 auto;
+    text-align: left;
+    box-shadow: 0 8px 24px rgba(6, 26, 64, 0.25);
+}
+
+.secao .playlist-titulo {
+    color: #90CAF9;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0 0 14px 0;
+}
+
+.musica {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 12px 10px;
+    border-top: 1px solid rgba(144, 202, 249, 0.2);
+    border-radius: 10px;
+}
+
+.musica:hover {
+    background-color: #0D47A1;
+}
+
+.musica-numero {
+    color: #90CAF9;
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.musica-info {
+    flex: 1;
+}
+
+.musica-nome {
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.musica-artista {
+    color: #BBDEFB;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.botao-ouvir {
+    background-color: #90CAF9;
+    color: #061A40;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.botao-ouvir:hover {
+    background-color: white;
+}
