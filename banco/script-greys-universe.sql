@@ -1,5 +1,5 @@
 -- =========================================================
--- PROJETO INDIVIDUAL – Grey’s Universe
+-- PROJETO INDIVIDUAL – Grey's Universe
 -- Script de criação do banco de dados (rodar na VM Linux)
 -- =========================================================
 
@@ -11,11 +11,13 @@ USE GreysUniverse;
 -- TABELA PERSONAGEM
 -- Guarda os personagens que o usuário pode escolher no perfil
 -- (no lugar da tabela "empresa" do web-data-viz)
+-- imagem: nome do arquivo da foto em front/assets/imgs
 -- ---------------------------------------------------------
 CREATE TABLE personagem (
 idPersonagem INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
-descricao VARCHAR(200)
+descricao VARCHAR(200),
+imagem VARCHAR(45)
 );
 
 -- ---------------------------------------------------------
@@ -70,15 +72,19 @@ INSERT INTO nivel (nome) VALUES
 ('dificil');
 
 -- ---------------------------------------------------------
--- PERSONAGENS (troque ou acrescente os que você quiser)
+-- PERSONAGENS
 -- ---------------------------------------------------------
-INSERT INTO personagem (nome, descricao) VALUES
-('Meredith Grey', 'A protagonista: residente que se torna uma das maiores cirurgiãs do hospital.'),
-('Cristina Yang', 'Cirurgiã cardiotorácica brilhante, competitiva e a melhor amiga de Meredith.'),
-('Derek Shepherd', 'Neurocirurgião conhecido como McDreamy.'),
-('Miranda Bailey', 'Exigente e justa, conhecida como "A Nazista" pelos residentes.'),
-('Alex Karev', 'Começa arrogante e se torna um dedicado cirurgião pediátrico.'),
-('Richard Webber', 'Chefe de cirurgia e mentor de várias gerações de médicos.');
+INSERT INTO personagem (nome, descricao, imagem) VALUES
+('Meredith Grey', 'A protagonista: residente que se torna uma das maiores cirurgiãs do hospital.', 'meredith.webp'),
+('Cristina Yang', 'Cirurgiã cardiotorácica brilhante, competitiva e a melhor amiga de Meredith.', 'cristina.jpg'),
+('Derek Shepherd', 'Neurocirurgião conhecido como McDreamy.', 'derek.jpg'),
+('Miranda Bailey', 'Exigente e justa, conhecida como "A Nazista" pelos residentes.', 'bailey.jpg'),
+('Alex Karev', 'Começa arrogante e se torna um dedicado cirurgião pediátrico.', 'alex.jpg'),
+('Richard Webber', 'Chefe de cirurgia e mentor de várias gerações de médicos.', 'webber.jpg'),
+('Mark Sloan', 'Cirurgião plástico conhecido como McSteamy, melhor amigo de Derek.', 'mark.jpg'),
+('Callie Torres', 'Cirurgiã ortopédica, forte, divertida e leal aos amigos.', 'callie.jpg'),
+('Lexie Grey', 'Meia-irmã de Meredith, famosa pela memória fotográfica.', 'lexie.jpg'),
+('April Kepner', 'Cirurgiã de trauma, organizada e muito dedicada.', 'april.jpg');
 
 -- =========================================================
 -- TESTES (rode depois de criar tudo, para conferir)
