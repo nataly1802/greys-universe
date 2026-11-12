@@ -393,3 +393,36 @@ h1, h2, h3 {
     color: #0D47A1;
     font-weight: bold;
 }
+
+/* ===== ESCOLHA DE PERSONAGEM ===== */
+.pagina-personagem .cartao-personagem {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pagina-personagem .cartao-personagem p {
+    font-size: 13px;
+    color: #061A40;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.botao-escolher {
+    background-color: #0D47A1;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.botao-escolher:hover {
+    background-color: #061A40;
+}
+
+.escolhido {
+    border: 3px solid #0D47A1;
+}
