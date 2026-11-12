@@ -19,6 +19,8 @@ let usuarioRouter = require("./src/routes/usuarios");
 
 let personagemRouter = require("./src/routes/personagens");
 
+let tentativaRouter = require("./src/routes/tentativas");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../front")));
@@ -29,6 +31,8 @@ app.use(cors());
 app.use("/usuarios", usuarioRouter);
 
 app.use("/personagens", personagemRouter);
+
+app.use("/tentativas", tentativaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`Grey's Universe rodando em http://${HOST_APP}:${PORTA_APP}`);
