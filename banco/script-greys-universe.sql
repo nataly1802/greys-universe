@@ -127,3 +127,37 @@ SELECT nivel.nome AS Nivel,
 		ON fkNivel = idNivel
 	WHERE fkUsuario = 1
 	GROUP BY nivel.nome;
+
+-- =========================================================
+-- DASHBOARD – SEU PRONTUÁRIO DE DESEMPENHO
+-- =========================================================
+
+-- GRÁFICO DE LINHA: % de acertos de cada tentativa, em ordem de data
+SELECT fkNivel,
+       ROUND(acertos * 100 / totalPerguntas) AS porcentagem,
+       dtTentativa
+    FROM tentativa
+    WHERE fkUsuario = 8
+    ORDER BY idTentativa;
+
+-- GRÁFICO DE BARRAS: média de % de acertos por nível
+SELECT nivel.nome AS nivel,
+       ROUND(AVG(acertos * 100 / totalPerguntas)) AS mediaPorcentagem
+    FROM tentativa JOIN nivel
+        ON fkNivel = idNivel
+    WHERE fkUsuario = 8
+    GROUP BY idNivel, nivel.nome
+    ORDER BY idNivel;
+
+-- KPIs: melhor resultado, média geral e total de tentativas
+SELECT ROUND(MAX(acertos * 100 / totalPerguntas)) AS melhorPorcentagem,
+       ROUND(AVG(acertos * 100 / totalPerguntas)) AS mediaPorcentagem,
+       COUNT(idTentativa) AS totalTentativas
+    FROM tentativa
+    WHERE fkUsuario = 8;
+
+-- KPI NÍVEL ATUAL: maior nível em que a pessoa já fez 70% ou mais
+SELECT MAX(fkNivel) AS maiorNivelConcluido
+    FROM tentativa
+    WHERE fkUsuario = 8
+      AND acertos * 100 / totalPerguntas >= 70;
