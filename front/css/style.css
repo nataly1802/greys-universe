@@ -283,3 +283,113 @@ h1, h2, h3 {
 .botao-ouvir:hover {
     background-color: white;
 }
+
+/* ===== TELAS DE FORMULÁRIO (cadastro e login) ===== */
+.pagina-form {
+    display: flex;
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(6, 26, 64, 0.15);
+}
+
+.form-lateral {
+    background-color: #061A40;
+    color: white;
+    width: 40%;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-lateral h2 {
+    font-size: 34px;
+    color: #BBDEFB;
+    margin: 0 0 16px 0;
+}
+
+.form-lateral p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #DCEBFF;
+}
+
+.form-lateral .frase-escrita {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: #90CAF9;
+    margin-top: 40px;
+}
+
+.form-conteudo {
+    width: 60%;
+    padding: 50px;
+}
+
+.form-conteudo h2 {
+    font-size: 30px;
+    margin: 0 0 24px 0;
+}
+
+.campo {
+    margin-bottom: 16px;
+}
+
+.campo label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.campo input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #BBDEFB;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: #F5F9FF;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: #0D47A1;
+}
+
+.botao-form {
+    width: 100%;
+    background-color: #061A40;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.botao-form:hover {
+    background-color: #0D47A1;
+}
+
+.mensagem {
+    margin-top: 16px;
+    font-size: 15px;
+    color: #0D47A1;
+}
+
+.link-form {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.link-form a {
+    color: #0D47A1;
+    font-weight: bold;
+}

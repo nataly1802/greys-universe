@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Grey's Universe</title>
+
+    <!-- FONTES DO GOOGLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <div class="menu">
+        <a href="index.html" class="logo">
+            <svg class="logo-icone" viewBox="0 0 64 56">
+                <circle cx="10" cy="5" r="2" />
+                <circle cx="26" cy="5" r="2" />
+                <path d="M10 7 C10 18 12 23 18 23 C24 23 26 18 26 7" />
+                <path d="M18 23 V32 Q18 42 27 42 H32 L35 36 L39 50 L43 30 L47 42 H51" />
+                <circle cx="56" cy="42" r="4.5" />
+            </svg>
+            Grey's Universe
+        </a>
+        <div class="menu-links">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="curiosidades.html">Curiosidades</a>
+            <a href="index.html#musicas">Músicas</a>
+            <a href="frases.html">Frases</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="login.html" class="botao-entrar">Entrar</a>
+        </div>
+    </div>
+
+    <!-- CAIXA DO CADASTRO -->
+    <div class="pagina-form">
+
+        <!-- LADO ESQUERDO -->
+        <div class="form-lateral">
+            <h2>Junte-se a nós!</h2>
+            <p>
+                Crie sua conta para escolher para conhecer sobre a série, escolher o seu personagem, jogar o quiz
+                e acompanhar a sua evolução no universo de Grey's Anatomy.
+            </p>
+            <p class="frase-escrita">"Apenas se permita ser feliz."</p>
+        </div>
+
+        <!-- LADO DIREITO: FORMULÁRIO -->
+        <div class="form-conteudo">
+            <h2>Criar conta</h2>
+
+            <div class="campo">
+                <label>Nome completo</label>
+                <input type="text" id="ipt_nome" placeholder="Digite seu nome">
+            </div>
+
+            <div class="campo">
+                <label>E-mail</label>
+                <input type="text" id="ipt_email" placeholder="exemplo@email.com">
+            </div>
+
+            <div class="campo">
+                <label>Senha</label>
+                <input type="password" id="ipt_senha" placeholder="Mínimo 6 caracteres e 1 número">
+            </div>
+
+            <div class="campo">
+                <label>Confirmar senha</label>
+                <input type="password" id="ipt_confirmacao" placeholder="Digite a senha novamente">
+            </div>
+
+            <button class="botao-form" onclick="cadastrar()">Cadastrar</button>
+
+            <div class="mensagem" id="div_exibir"></div>
+
+            <p class="link-form">Já tem uma conta? <a href="login.html">Faça login</a></p>
+        </div>
+
+    </div>
+
+        <script>
+        function cadastrar() {
+            // pega o que foi digitado em cada campo
+            let nome = ipt_nome.value;
+            let email = ipt_email.value;
+            let senha = ipt_senha.value;
+            let confirmacao = ipt_confirmacao.value;
+
+            // VALIDAÇÃO 1: campos vazios (vetor + for + contador)
+            let campos = [nome, email, senha, confirmacao];
+            let camposVazios = 0;
+            for (let i = 0; i < campos.length; i++) {
+                if (campos[i] == "") {
+                    camposVazios++;
+                }
+            }
+
+            // VALIDAÇÃO 3: e-mail (for passando letra por letra e contando)
+            let qtdArroba = 0;
+            let qtdPonto = 0;
+            for (let i = 0; i < email.length; i++) {
+                if (email[i] == "@") {
+                    qtdArroba++;
+                } else if (email[i] == ".") {
+                    qtdPonto++;
+                }
+            }
+
+            // VALIDAÇÃO 5: senha com pelo menos 1 número (vetor + for)
+            let numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            let qtdNumeros = 0;
+            for (let i = 0; i < senha.length; i++) {
+                for (let j = 0; j < numeros.length; j++) {
+                    if (senha[i] == numeros[j]) {
+                        qtdNumeros++;
+                    }
+                }
+            }
+
+            // CONFERÊNCIA: mostra o primeiro erro encontrado
+            if (camposVazios > 0) {
+                div_exibir.innerHTML = "Preencha todos os campos.";
+            } else if (nome.length < 3) {
+                div_exibir.innerHTML = "O nome precisa ter pelo menos 3 letras.";
+            } else if (qtdArroba != 1 || qtdPonto == 0) {
+                div_exibir.innerHTML = "Digite um e-mail válido, com um @ e um ponto.";
+            } else if (senha.length < 6) {
+                div_exibir.innerHTML = "A senha precisa ter pelo menos 6 caracteres.";
+            } else if (qtdNumeros == 0) {
+                div_exibir.innerHTML = "A senha precisa ter pelo menos 1 número.";
+            } else if (senha != confirmacao) {
+                div_exibir.innerHTML = "As senhas não são iguais.";
+            } else {
+                // objeto com os dados que vão para a API
+                let dadosUsuario = {
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha
+                };
+
+                fetch("/usuarios/cadastrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dadosUsuario)
+                }).then(function (resposta) {
+                    if (resposta.ok) {
+                        div_exibir.innerHTML = "Cadastro realizado com sucesso! Indo para o login...";
+                        setTimeout(function () {
+                            window.location = "login.html";
+                        }, 2000);
+                    } else {
+                        div_exibir.innerHTML = "Não foi possível cadastrar. Tente novamente.";
+                    }
+                }).catch(function (erro) {
+                    console.log(erro);
+                    div_exibir.innerHTML = "Erro de conexão com o servidor.";
+                });
+            }
+        }
+    </script>
+
+</body>
+
+</html>
