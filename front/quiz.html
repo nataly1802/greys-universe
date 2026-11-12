@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | Grey's Universe</title>
+
+    <!-- FONTES DO GOOGLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="menu">
+        <a href="index.html" class="logo">
+            <svg class="logo-icone" viewBox="0 0 64 56"><circle cx="10" cy="5" r="2" /><circle cx="26" cy="5" r="2" /><path d="M10 7 C10 18 12 23 18 23 C24 23 26 18 26 7" /><path d="M18 23 V32 Q18 42 27 42 H32 L35 36 L39 50 L43 30 L47 42 H51" /><circle cx="56" cy="42" r="4.5" /></svg>
+            <span>Grey's Universe</span>
+        </a>
+        <nav class="menu-links">
+            <a href="index.html">Início</a>
+            <a href="index.html#musicas">Músicas</a>
+            <a href="quiz.html">Quiz</a>
+        </nav>
+    </header>
+
+    <main class="pagina-quiz">
+        <div class="caixa-quiz" id="div_quiz"></div>
+        <div class="mensagem" id="div_exibir"></div>
+    </main>
+
+    <script>
+        // se não estiver logada, volta para o login
+        if (sessionStorage.ID_USUARIO == null) {
+            window.location = "login.html";
+        }
+
+        // ===== PERGUNTAS =====
+        // 0 a 9 = Interno | 10 a 19 = Residente | 20 a 29 = Cirurgião Atendente
+        let perguntas = [
+            // Interno
+            "Em que cidade se passa Grey's Anatomy?",
+            "Qual é o nome da protagonista?",
+            "Qual é o apelido de Derek Shepherd?",
+            "Quem Meredith chama de 'minha pessoa'?",
+            "Qual é a especialidade de Derek?",
+            "Quem é o chefe de cirurgia no começo da série?",
+            "Qual é o apelido de Mark Sloan?",
+            "Qual é a especialidade de Cristina?",
+            "Quem é a mãe de Meredith, uma cirurgiã famosa?",
+            "Qual é o nome do hospital na 1ª temporada?",
+            // Residente
+            "Em que ano a série estreou?",
+            "Qual é a relação entre Lexie e Meredith?",
+            "Qual é a especialidade de Callie Torres?",
+            "Em que área Alex Karev se especializa?",
+            "Qual é a especialidade de Mark Sloan?",
+            "Qual é o nome da primeira esposa de Derek?",
+            "Onde Meredith e Derek fazem o primeiro casamento?",
+            "Com quem April Kepner se casa depois de deixar o noivo no altar?",
+            "Para que país Cristina se muda quando sai da série?",
+            "Qual é o nome do pai de Meredith?",
+            // Cirurgião Atendente
+            "Em que temporada Derek morre?",
+            "Qual é o nome da série derivada estrelada por Addison?",
+            "Quantos filhos Meredith tem?",
+            "Qual é o nome da filha adotiva de Meredith e Derek?",
+            "Qual é o nome do cachorro de Meredith e Derek?",
+            "Como Lexie e Mark morrem?",
+            "O hospital passa a se chamar Grey Sloan Memorial em homenagem a quem?",
+            "Que doença Ellis Grey tinha?",
+            "Quem criou a série?",
+            "Qual é o nome do bar em frente ao hospital?"
+        ];
+
+        let alternativaA = ["Boston", "Cristina Yang", "McSteamy", "Cristina Yang", "Cardiologia", "Derek Shepherd", "McSteamy", "Neurocirurgia", "Addison Montgomery", "Grey Sloan Memorial",
+                            "2003", "Primas", "Cardiologia", "Plástica", "Cirurgia plástica", "Rose", "Na igreja", "Alex Karev", "Canadá", "Richard Webber",
+                            "9ª", "Station 19", "1", "Sofia", "Max", "Tiroteio", "Meredith e Mark", "Câncer", "Ryan Murphy", "Joe's"];
+
+        let alternativaB = ["Seattle", "Izzie Stevens", "McDreamy", "Alex Karev", "Ortopedia", "Richard Webber", "McDreamy", "Pediatria", "Ellis Grey", "Seattle Grace Hospital",
+                            "2005", "Amigas de infância", "Ortopedia", "Trauma", "Neurocirurgia", "Addison Montgomery", "No hospital", "Jackson Avery", "Inglaterra", "Thatcher Grey",
+                            "10ª", "Private Practice", "2", "Zola", "Bob", "Queda de avião", "Ellis e Mark", "Alzheimer", "Shonda Rhimes", "Moe's"];
+
+        let alternativaC = ["Chicago", "Meredith Grey", "McVet", "Callie Torres", "Neurocirurgia", "Mark Sloan", "McSexy", "Cardiotorácica", "Miranda Bailey", "Mercy West",
+                            "2007", "Meias-irmãs", "Neurologia", "Pediatria", "Ortopedia", "Callie Torres", "Num post-it", "Owen Hunt", "Suíça", "Derek Grey",
+                            "11ª", "Chicago Med", "3", "Ellis", "Doc", "Acidente de carro", "Lexie Grey e Mark Sloan", "Parkinson", "Dick Wolf", "Paddy's"];
+
+        let alternativaD = ["Nova York", "Lexie Grey", "McHot", "April Kepner", "Pediatria", "Miranda Bailey", "McDoctor", "Plástica", "Catherine Avery", "Seattle Presbyterian",
+                            "2009", "Nenhuma", "Obstetrícia", "Cardiologia", "Geral", "Amelia Shepherd", "Na praia", "George O'Malley", "Japão", "George Grey",
+                            "12ª", "The Resident", "4", "Harriet", "Toby", "Explosão", "Meredith e Derek", "Diabetes", "Greg Berlanti", "MacLaren's"];
+
+        // posição da alternativa certa: 0 = A, 1 = B, 2 = C, 3 = D
+        let respostas = [1, 2, 1, 0, 2, 1, 0, 2, 1, 1,
+                         1, 2, 1, 2, 0, 1, 2, 1, 2, 1,
+                         2, 1, 2, 1, 2, 1, 2, 1, 1, 0];
+
+        let nomesNiveis = ["Interno", "Residente", "Cirurgião Atendente"];
+
+        // ===== CONTROLE DO JOGO =====
+        let nivelAtual = 0;      // 1, 2 ou 3 (igual ao idNivel do banco)
+        let inicio = 0;          // posição da 1ª pergunta do nível nos vetores
+        let perguntaAtual = 0;   // de 0 a 9
+        let acertos = 0;
+        let totalPerguntas = 10;
+
+        mostrarNiveis();
+
+        function mostrarNiveis() {
+            let html = `<h1>Escolha o seu nível</h1>
+                        <p>Olá, ${sessionStorage.NOME_USUARIO}! Acerte 70% para provar que está pronta para o próximo nível.</p>`;
+
+            for (let i = 0; i < nomesNiveis.length; i++) {
+                html += `<button class="botao-nivel" onclick="comecar(${i + 1})">${nomesNiveis[i]}</button>`;
+            }
+
+            div_quiz.innerHTML = html;
+            div_exibir.innerHTML = "";
+        }
+
+        function comecar(nivel) {
+            nivelAtual = nivel;
+            inicio = (nivel - 1) * 10;
+            perguntaAtual = 0;
+            acertos = 0;
+            mostrarPergunta();
+        }
+
+        function mostrarPergunta() {
+            let posicao = inicio + perguntaAtual;
+            let opcoes = [alternativaA[posicao], alternativaB[posicao], alternativaC[posicao], alternativaD[posicao]];
+
+            let html = `<p class="progresso">${nomesNiveis[nivelAtual - 1]} · Pergunta ${perguntaAtual + 1} de ${totalPerguntas}</p>
+                        <h2>${perguntas[posicao]}</h2>`;
+
+            for (let i = 0; i < opcoes.length; i++) {
+                html += `<label class="alternativa">
+                            <input type="radio" name="alternativa" value="${i}"> ${opcoes[i]}
+                         </label>`;
+            }
+
+            html += `<button class="botao-form" onclick="responder()">Responder</button>`;
+
+            div_quiz.innerHTML = html;
+            div_exibir.innerHTML = "";
+        }
+
+        function responder() {
+            let bolinhas = document.getElementsByName("alternativa");
+            let escolhida = -1;   // -1 = nada marcado
+
+            for (let i = 0; i < bolinhas.length; i++) {
+                if (bolinhas[i].checked) {
+                    escolhida = i;
+                }
+            }
+
+            if (escolhida == -1) {
+                div_exibir.innerHTML = "Escolha uma alternativa antes de continuar.";
+            } else {
+                if (escolhida == respostas[inicio + perguntaAtual]) {
+                    acertos++;
+                }
+
+                perguntaAtual++;
+
+                if (perguntaAtual < totalPerguntas) {
+                    mostrarPergunta();
+                } else {
+                    mostrarResultado();
+                }
+            }
+        }
+
+        function mostrarResultado() {
+            let porcentagem = acertos * 100 / totalPerguntas;   // regra de três
+            let minimo = 70 * totalPerguntas / 100;             // 70% de 10 = 7
+
+            let html = `<h1>Resultado – ${nomesNiveis[nivelAtual - 1]}</h1>
+                        <div class="resultado-numeros">
+                            <div class="resultado-item"><span>Acertos</span><b>${acertos}/${totalPerguntas}</b></div>
+                            <div class="resultado-item"><span>Porcentagem</span><b>${porcentagem}%</b></div>
+                        </div>`;
+
+            if (acertos >= minimo) {
+                if (nivelAtual < 3) {
+                    html += `<p class="passou">Parabéns! Você desbloqueou o nível ${nomesNiveis[nivelAtual]}.</p>
+                             <button class="botao-form" onclick="comecar(${nivelAtual + 1})">Ir para o próximo nível</button>`;
+                } else {
+                    html += `<p class="passou">Que dia lindo para salvar vidas! Você é Cirurgiã Atendente!</p>`;
+                }
+            } else {
+                html += `<p class="nao-passou">Faltaram ${minimo - acertos} acertos para chegar aos 70%. Tente de novo!</p>`;
+            }
+
+            html += `<button class="botao-form" onclick="comecar(${nivelAtual})">Tentar de novo</button>
+                     <button class="botao-form" onclick="mostrarNiveis()">Escolher outro nível</button>`;
+
+            div_quiz.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>
