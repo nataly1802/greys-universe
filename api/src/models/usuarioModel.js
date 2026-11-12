@@ -21,7 +21,18 @@ function cadastrar(nome, email, senha) {
     return database.executar(instrucaoSql);
 }
 
+// ESCOLHA DE PERSONAGEM: grava o personagem escolhido no usuário
+function atualizarPersonagem(idUsuario, idPersonagem) {
+    let instrucaoSql = `
+        UPDATE usuario SET fkPersonagem = ${idPersonagem}
+            WHERE idUsuario = ${idUsuario};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    atualizarPersonagem
 };

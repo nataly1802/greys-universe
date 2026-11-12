@@ -56,7 +56,29 @@ function cadastrar(req, res) {
     }
 }
 
+// ESCOLHA DE PERSONAGEM
+function atualizarPersonagem(req, res) {
+    let idUsuario = req.body.idUsuarioServer;
+    let idPersonagem = req.body.idPersonagemServer;
+
+    if (idUsuario == null) {
+        res.status(400).send("O id do usuário não chegou na API!");
+    } else if (idPersonagem == null) {
+        res.status(400).send("O id do personagem não chegou na API!");
+    } else {
+        usuarioModel.atualizarPersonagem(idUsuario, idPersonagem)
+            .then(function (resultado) {
+                res.json(resultado);
+            })
+            .catch(function (erro) {
+                console.log("Erro ao escolher personagem: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
+    }
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    atualizarPersonagem
 };

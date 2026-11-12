@@ -13,4 +13,9 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+// endereço: /usuarios/atualizarPersonagem
+router.post("/atualizarPersonagem", function (req, res) {
+    usuarioController.atualizarPersonagem(req, res);
+});
+
 module.exports = router;
