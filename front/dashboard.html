@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Grey's Universe</title>
+
+    <!-- FONTES DO GOOGLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="menu">
+        <a href="index.html" class="logo">
+            <svg class="logo-icone" viewBox="0 0 64 56"><circle cx="10" cy="5" r="2" /><circle cx="26" cy="5" r="2" /><path d="M10 7 C10 18 12 23 18 23 C24 23 26 18 26 7" /><path d="M18 23 V32 Q18 42 27 42 H32 L35 36 L39 50 L43 30 L47 42 H51" /><circle cx="56" cy="42" r="4.5" /></svg>
+            <span>Grey's Universe</span>
+        </a>
+        <nav class="menu-links">
+            <a href="index.html">Início</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="dashboard.html">Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="pagina-dashboard">
+        <h1>Seu Prontuário de Desempenho</h1>
+        <p class="dash-sub">Você está evoluindo no quiz? Em qual nível precisa estudar mais? · Meta para avançar: <b>70% de acertos</b></p>
+
+        <div class="mensagem" id="div_exibir"></div>
+
+        <!-- KPIs -->
+        <section class="dash-kpis">
+            <div class="kpi kpi-destaque" id="div_kpi_nivel"></div>
+            <div class="kpi" id="div_kpi_melhor"></div>
+            <div class="kpi" id="div_kpi_media"></div>
+            <div class="kpi" id="div_kpi_evolucao"></div>
+        </section>
+
+        <!-- GRÁFICOS -->
+        <section class="dash-graficos">
+            <div class="dash-card">
+                <h3>Evolução dos acertos por tentativa (%)</h3>
+                <p>Cada ponto é uma tentativa. A linha tracejada é a meta para avançar de nível.</p>
+                <canvas id="grafico_evolucao"></canvas>
+            </div>
+            <div class="dash-card">
+                <h3>Média de acertos por nível (%)</h3>
+                <p>Verde: na meta (70% ou mais) · Amarelo: atenção (50% a 69%) · Vermelho: abaixo de 50%</p>
+                <canvas id="grafico_niveis"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <!-- BIBLIOTECA CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script>
+        // se não estiver logada, volta para o login
+        if (sessionStorage.ID_USUARIO == null) {
+            window.location = "login.html";
+        }
+
+        let idUsuario = sessionStorage.ID_USUARIO;
+        let nomesNiveis = ["Interno", "Residente", "Cirurgião Atendente"];
+        let nomesNoBanco = ["facil", "medio", "dificil"];
+        let meta = 70;
+        let dadosEvolucao = [];
+
+        buscarKpis();
+        buscarNivelConcluido();
+        buscarEvolucao();
+        buscarMediaPorNivel();
+
+        // ===== SEMÁFORO =====
+        function corSemaforo(porcentagem) {
+            if (porcentagem >= meta) {
+                return "verde";
+            } else if (porcentagem >= 50) {
+                return "amarelo";
+            } else {
+                return "vermelho";
+            }
+        }
+
+        // mesma regra, mas devolve a cor em código (para o gráfico)
+        function corSemaforoHex(porcentagem) {
+            if (porcentagem >= meta) {
+                return "#2E9E5B";
+            } else if (porcentagem >= 50) {
+                return "#E0A800";
+            } else {
+                return "#C62828";
+            }
+        }
+
+        function textoMeta(porcentagem) {
+            if (porcentagem >= meta) {
+                return "▲ na meta (70%)";
+            } else if (porcentagem >= 50) {
+                return "● atenção: a meta é 70%";
+            } else {
+                return "▼ abaixo da meta (70%)";
+            }
+        }
+
+        // ===== KPIs: melhor resultado e média geral =====
+        function buscarKpis() {
+            fetch(`/tentativas/kpis/${idUsuario}`)
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        resposta.json().then(function (dados) {
+                            mostrarKpis(dados[0]);
+                        });
+                    } else {
+                        div_exibir.innerHTML = "Erro ao buscar os indicadores.";
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
+        }
+
+        function mostrarKpis(dados) {
+            let melhor = Number(dados.melhorPorcentagem);
+            let media = Number(dados.mediaPorcentagem);
+            let total = Number(dados.totalTentativas);
+
+            if (total == 0) {
+                div_exibir.innerHTML = `Você ainda não jogou o quiz. <a href="quiz.html">Jogar agora</a> para ver o seu prontuário!`;
+                return;
+            }
+
+            div_kpi_melhor.className = "kpi " + corSemaforo(melhor);
+            div_kpi_melhor.innerHTML = `<small>Melhor resultado</small>
+                                        <big>${melhor}%</big>
+                                        <p>${textoMeta(melhor)}</p>`;
+
+            div_kpi_media.className = "kpi " + corSemaforo(media);
+            div_kpi_media.innerHTML = `<small>Média geral de acertos</small>
+                                       <big>${media}%</big>
+                                       <p>em ${total} tentativas · ${textoMeta(media)}</p>`;
+        }
+
+        // ===== KPI: nível atual =====
+        function buscarNivelConcluido() {
+            fetch(`/tentativas/nivel-concluido/${idUsuario}`)
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        resposta.json().then(function (dados) {
+                            mostrarNivel(dados[0].maiorNivelConcluido);
+                        });
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
+        }
+
+        function mostrarNivel(maiorConcluido) {
+            let titulo = "";
+            let texto = "";
+
+            if (maiorConcluido == null) {
+                titulo = "Interno";
+                texto = "Faça 70% no Interno para desbloquear o Residente";
+            } else if (maiorConcluido < 3) {
+                titulo = nomesNiveis[maiorConcluido] + " 🔓";
+                texto = nomesNiveis[maiorConcluido - 1] + " concluído ✓";
+            } else {
+                titulo = "Cirurgiã Atendente 🏆";
+                texto = "Você concluiu todos os níveis!";
+            }
+
+            div_kpi_nivel.innerHTML = `<small>Nível atual</small>
+                                       <big>${titulo}</big>
+                                       <p>${texto}</p>`;
+        }
+
+        // ===== KPI EVOLUÇÃO + GRÁFICO DE LINHA =====
+        function buscarEvolucao() {
+            fetch(`/tentativas/evolucao/${idUsuario}`)
+                .then(function (resposta) {
+                    if (resposta.status == 204) {
+                        div_kpi_evolucao.innerHTML = `<small>Sua evolução</small><big>—</big><p>Jogue o quiz para começar</p>`;
+                    } else if (resposta.ok) {
+                        resposta.json().then(function (dados) {
+                            dadosEvolucao = dados;
+                            mostrarEvolucao(dados);
+                            montarGraficoEvolucao();
+                        });
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
+        }
+
+        function mostrarEvolucao(dados) {
+            // o nível da ÚLTIMA tentativa é o que a pessoa está jogando agora
+            let ultimoNivel = dados[dados.length - 1].fkNivel;
+            let nomeNivel = nomesNiveis[ultimoNivel - 1];
+
+            let primeira = 0;
+            let ultima = 0;
+            let qtd = 0;
+
+            for (let i = 0; i < dados.length; i++) {
+                if (dados[i].fkNivel == ultimoNivel) {
+                    qtd++;
+                    if (qtd == 1) {
+                        primeira = Number(dados[i].porcentagem);
+                    }
+                    ultima = Number(dados[i].porcentagem);
+                }
+            }
+
+            if (qtd < 2) {
+                div_kpi_evolucao.innerHTML = `<small>Sua evolução no ${nomeNivel}</small>
+                                              <big>—</big>
+                                              <p>Jogue de novo esse nível para ver sua evolução</p>`;
+            } else if (primeira == 0) {
+                div_kpi_evolucao.className = "kpi verde";
+                div_kpi_evolucao.innerHTML = `<small>Sua evolução no ${nomeNivel}</small>
+                                              <big>${ultima}%</big>
+                                              <p>1ª tentativa: 0% → última: ${ultima}%</p>`;
+            } else {
+                // acréscimo percentual: (final - inicial) ÷ inicial × 100
+                let evolucao = Math.round((ultima - primeira) * 100 / primeira);
+                let sinal = "";
+
+                if (evolucao > 0) {
+                    sinal = "+";
+                    div_kpi_evolucao.className = "kpi verde";
+                } else if (evolucao == 0) {
+                    div_kpi_evolucao.className = "kpi amarelo";
+                } else {
+                    div_kpi_evolucao.className = "kpi vermelho";
+                }
+
+                div_kpi_evolucao.innerHTML = `<small>Sua evolução no ${nomeNivel}</small>
+                                              <big>${sinal}${evolucao}%</big>
+                                              <p>1ª tentativa: ${primeira}% → última: ${ultima}%</p>`;
+            }
+        }
+
+        function montarGraficoEvolucao() {
+            // 1) separa as porcentagens em um vetor para cada nível
+            let interno = [];
+            let residente = [];
+            let cirurgiao = [];
+
+            for (let i = 0; i < dadosEvolucao.length; i++) {
+                let porcentagem = Number(dadosEvolucao[i].porcentagem);
+
+                if (dadosEvolucao[i].fkNivel == 1) {
+                    interno.push(porcentagem);
+                } else if (dadosEvolucao[i].fkNivel == 2) {
+                    residente.push(porcentagem);
+                } else {
+                    cirurgiao.push(porcentagem);
+                }
+            }
+
+            // 2) descobre qual nível tem mais tentativas (tamanho do eixo X)
+            let maior = interno.length;
+            if (residente.length > maior) {
+                maior = residente.length;
+            }
+            if (cirurgiao.length > maior) {
+                maior = cirurgiao.length;
+            }
+
+            // 3) monta os rótulos ("1ª", "2ª"...) e a linha da meta (70 em todos)
+            let rotulos = [];
+            let linhaMeta = [];
+            for (let i = 0; i < maior; i++) {
+                rotulos.push((i + 1) + "ª");
+                linhaMeta.push(meta);
+            }
+
+            // 4) desenha o gráfico
+            new Chart(grafico_evolucao, {
+                type: "line",
+                data: {
+                    labels: rotulos,
+                    datasets: [
+                        {
+                            label: "Interno",
+                            data: interno,
+                            borderColor: "#0D47A1",
+                            backgroundColor: "#0D47A1",
+                            borderWidth: 3,
+                            tension: 0.2
+                        },
+                        {
+                            label: "Residente",
+                            data: residente,
+                            borderColor: "#42A5F5",
+                            backgroundColor: "#42A5F5",
+                            borderWidth: 3,
+                            tension: 0.2
+                        },
+                        {
+                            label: "Cirurgião Atendente",
+                            data: cirurgiao,
+                            borderColor: "#7E57C2",
+                            backgroundColor: "#7E57C2",
+                            borderWidth: 3,
+                            tension: 0.2
+                        },
+                        {
+                            label: "Meta (70%)",
+                            data: linhaMeta,
+                            borderColor: "#2E9E5B",
+                            borderDash: [6, 5],
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                callback: function (valor) {
+                                    return valor + "%";
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: "Tentativa"
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== GRÁFICO DE BARRAS: média por nível =====
+        function buscarMediaPorNivel() {
+            fetch(`/tentativas/media-nivel/${idUsuario}`)
+                .then(function (resposta) {
+                    if (resposta.ok && resposta.status != 204) {
+                        resposta.json().then(function (dados) {
+                            montarGraficoNiveis(dados);
+                        });
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
+        }
+
+        function montarGraficoNiveis(dados) {
+            let rotulos = [];
+            let valores = [];
+            let cores = [];
+            let linhaMeta = [];
+
+            for (let i = 0; i < dados.length; i++) {
+                let media = Number(dados[i].mediaPorcentagem);
+
+                // troca "facil" por "Interno", "medio" por "Residente"...
+                for (let j = 0; j < nomesNoBanco.length; j++) {
+                    if (dados[i].nivel == nomesNoBanco[j]) {
+                        rotulos.push(nomesNiveis[j]);
+                    }
+                }
+
+                valores.push(media);
+                cores.push(corSemaforoHex(media));
+                linhaMeta.push(meta);
+            }
+
+            new Chart(grafico_niveis, {
+                type: "bar",
+                data: {
+                    labels: rotulos,
+                    datasets: [
+                        {
+                            type: "line",
+                            label: "Meta (70%)",
+                            data: linhaMeta,
+                            borderColor: "#2E9E5B",
+                            borderDash: [6, 5],
+                            borderWidth: 2,
+                            pointRadius: 0
+                        },
+                        {
+                            label: "Média de acertos",
+                            data: valores,
+                            backgroundColor: cores,
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                callback: function (valor) {
+                                    return valor + "%";
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

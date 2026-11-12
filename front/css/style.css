@@ -603,3 +603,149 @@ h1, h2, h3 {
     background-size: cover;
     background-position: center;
 }
+
+/* =========================================
+   DASHBOARD – SEU PRONTUÁRIO DE DESEMPENHO
+   ========================================= */
+.pagina-dashboard {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 36px 32px 48px 32px;
+    box-sizing: border-box;
+}
+
+.pagina-dashboard h1 {
+    font-family: 'Playfair Display', serif;
+    color: #061A40;
+    font-size: 36px;
+    margin: 0;
+}
+
+.dash-sub {
+    font-family: 'Lato', sans-serif;
+    color: #0D47A1;
+    font-size: 17px;
+    margin: 8px 0 24px 0;
+}
+
+/* mensagem "Você ainda não jogou o quiz" */
+.pagina-dashboard .mensagem {
+    font-family: 'Lato', sans-serif;
+    color: #061A40;
+    font-size: 17px;
+    margin-bottom: 16px;
+}
+
+/* ----- linha dos 4 KPIs ----- */
+.dash-kpis {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 18px;
+}
+
+.kpi {
+    background-color: #FFFFFF;
+    border-radius: 14px;
+    padding: 20px 22px;
+    border-left: 6px solid #90CAF9;
+    box-shadow: 0 4px 14px rgba(6, 26, 64, 0.08);
+}
+
+.kpi small {
+    display: block;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #0D47A1;
+}
+
+.kpi big {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    color: #061A40;
+    margin: 8px 0;
+}
+
+.kpi p {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: #3A4A6A;
+    margin: 0;
+}
+
+/* KPI principal (nível atual): escuro, para chamar atenção */
+.kpi-destaque {
+    background-color: #061A40;
+}
+
+.kpi-destaque small {
+    color: #90CAF9;
+}
+
+.kpi-destaque big {
+    color: #FFFFFF;
+}
+
+.kpi-destaque p {
+    color: #BBDEFB;
+}
+
+/* ----- semáforo ----- */
+.kpi.verde {
+    border-left-color: #2E9E5B;
+}
+
+.kpi.verde p {
+    color: #1E6B3A;
+}
+
+.kpi.amarelo {
+    border-left-color: #E0A800;
+}
+
+.kpi.amarelo p {
+    color: #8A6400;
+}
+
+.kpi.vermelho {
+    border-left-color: #C62828;
+}
+
+.kpi.vermelho p {
+    color: #9B2C2C;
+}
+
+/* ----- gráficos ----- */
+.dash-graficos {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.dash-card {
+    background-color: #FFFFFF;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 14px rgba(6, 26, 64, 0.08);
+}
+
+.dash-card h3 {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: #061A40;
+    margin: 0;
+}
+
+.dash-card p {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: #3A4A6A;
+    margin: 6px 0 16px 0;
+}
+
+.kpi-destaque big {
+    font-size: 28px;
+}
