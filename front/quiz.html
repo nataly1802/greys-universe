@@ -176,6 +176,8 @@
         }
 
         function mostrarResultado() {
+            registrarTentativa();
+
             let porcentagem = acertos * 100 / totalPerguntas;   // regra de três
             let minimo = 70 * totalPerguntas / 100;             // 70% de 10 = 7
 
@@ -200,6 +202,30 @@
                      <button class="botao-form" onclick="mostrarNiveis()">Escolher outro nível</button>`;
 
             div_quiz.innerHTML = html;
+        }
+
+                function registrarTentativa() {
+            fetch("/tentativas/registrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idUsuarioServer: sessionStorage.ID_USUARIO,
+                    idNivelServer: nivelAtual,
+                    acertosServer: acertos,
+                    totalPerguntasServer: totalPerguntas
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    console.log("Tentativa salva no banco!");
+                } else {
+                    div_exibir.innerHTML = "Não foi possível salvar o seu resultado.";
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+                div_exibir.innerHTML = "Erro ao salvar o resultado.";
+            });
         }
     </script>
 </body>
