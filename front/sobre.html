@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre | Grey's Universe</title>
+
+    <!-- FONTES DO GOOGLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <div class="menu">
+        <a href="index.html" class="logo">
+            <svg class="logo-icone" viewBox="0 0 64 56">
+                <circle cx="10" cy="5" r="2" />
+                <circle cx="26" cy="5" r="2" />
+                <path d="M10 7 C10 18 12 23 18 23 C24 23 26 18 26 7" />
+                <path d="M18 23 V32 Q18 42 27 42 H32 L35 36 L39 50 L43 30 L47 42 H51" />
+                <circle cx="56" cy="42" r="4.5" />
+            </svg>
+            Grey's Universe
+        </a>
+        <div class="menu-links">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="curiosidades.html">Curiosidades</a>
+            <a href="index.html#musicas">Playlist</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="dashboard.html">Dashboard</a>
+            <span id="span_conta"></span>
+        </div>
+    </div>
+
+    <!-- 1. A SÉRIE -->
+    <div class="secao">
+        <h2>Sobre a série</h2>
+        <div class="texto-sobre">
+            <p>
+                <b>Grey's Anatomy</b> é uma série médica que acompanha a vida de Meredith Grey e de outros
+                médicos de um hospital em Seattle, nos Estados Unidos. Tudo começa quando eles ainda são
+                internos, recém-saídos da faculdade, e a série mostra o crescimento de cada um até se tornarem
+                cirurgiões.
+            </p>
+            <p>
+                Entre cirurgias de vida ou morte, a série fala de amizade, amor, perdas e superação.
+                Por isso ela conquista até quem não gosta de assuntos médicos.
+            </p>
+        </div>
+
+        <div class="cartoes">
+            <div class="cartao cartao-ficha">
+                <h3>Estreia</h3>
+                <strong>2005</strong>
+                <p>27 de março, no canal ABC (EUA)</p>
+            </div>
+            <div class="cartao cartao-ficha">
+                <h3>Criadora</h3>
+                <strong>Shonda Rhimes</strong>
+                <p>Também criou Scandal e Bridgerton</p>
+            </div>
+            <div class="cartao cartao-ficha">
+                <h3>Temporadas</h3>
+                <strong>23</strong>
+                <p>A 23ª estreou nos EUA em outubro de 2026</p>
+            </div>
+            <div class="cartao cartao-ficha">
+                <h3>Onde assistir</h3>
+                <strong>Disney+</strong>
+                <p>Temporadas 1 a 22 no Brasil</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. O PROJETO -->
+    <div class="secao secao-clara">
+        <h2>Sobre o projeto</h2>
+        <div class="texto-sobre">
+            <p>
+                Comecei a assistir Grey's Anatomy aos 14 anos, por indicação da minha prima, e desde então
+                a série faz parte da minha vida. Ela me ensinou muito sobre amizade, coragem e sobre
+                seguir em frente mesmo nos dias difíceis.
+            </p>
+            <p>
+                O <b>Grey's Universe</b> nasceu para dois públicos: quem nunca assistiu e quer conhecer
+                a série, e quem já é fã e quer testar o quanto sabe. Aqui você conhece os personagens,
+                ouve as músicas marcantes, escolhe o personagem que mais combina com você, joga o quiz
+                em três níveis e acompanha a sua evolução no dashboard.
+            </p>
+            <p>
+                Este site é o meu Projeto Individual do 1º semestre de Análise e Desenvolvimento de
+                Sistemas na SPTech.
+            </p>
+        </div>
+        <p class="frase-escrita">"Que dia lindo para salvar vidas."</p>
+    </div>
+
+    <script>
+        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
+        if (sessionStorage.ID_USUARIO != null) {
+            let nomeCompleto = sessionStorage.NOME_USUARIO;
+            let primeiroNome = "";
+            let espacos = 0;
+
+            for (let i = 0; i < nomeCompleto.length; i++) {
+                if (nomeCompleto[i] == " ") {
+                    espacos++;
+                }
+                if (espacos == 0) {
+                    primeiroNome += nomeCompleto[i];
+                }
+            }
+
+            span_conta.innerHTML = `<span class="ola-usuario">Olá, ${primeiroNome}</span>
+                                    <a href="#" class="botao-entrar" onclick="sair()">Sair</a>`;
+        } else {
+            span_conta.innerHTML = `<a href="login.html" class="botao-entrar">Entrar</a>`;
+        }
+
+        function sair() {
+            sessionStorage.clear();
+            window.location = "index.html";
+        }
+    </script>
+
+</body>
+
+</html>

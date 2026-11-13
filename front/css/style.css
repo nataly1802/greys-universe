@@ -775,3 +775,19 @@ section,
     margin-left: 22px;
     font-size: 15px;
 }
+
+/* =========================================
+   PÁGINA SOBRE
+   ========================================= */
+.texto-sobre {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.cartao-ficha strong {
+    display: block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px;
+    color: #0D47A1;
+    margin: 6px 0;
+}
