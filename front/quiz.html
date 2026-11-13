@@ -25,6 +25,7 @@
             <a href="index.html">Início</a>
             <a href="index.html#musicas">Músicas</a>
             <a href="quiz.html">Quiz</a>
+            <a href="dashboard.html">Dashboard</a>
         </nav>
     </header>
 
@@ -199,7 +200,8 @@
             }
 
             html += `<button class="botao-form" onclick="comecar(${nivelAtual})">Tentar de novo</button>
-                     <button class="botao-form" onclick="mostrarNiveis()">Escolher outro nível</button>`;
+                     <button class="botao-form" onclick="mostrarNiveis()">Escolher outro nível</button>
+                     <button class="botao-form" onclick="window.location = 'dashboard.html'">Ver meu dashboard</button>`;
 
             div_quiz.innerHTML = html;
         }
