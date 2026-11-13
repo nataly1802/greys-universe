@@ -16,18 +16,28 @@
 
 <body>
 
-    <header class="menu">
+    <!-- MENU -->
+    <div class="menu">
         <a href="index.html" class="logo">
-            <svg class="logo-icone" viewBox="0 0 64 56"><circle cx="10" cy="5" r="2" /><circle cx="26" cy="5" r="2" /><path d="M10 7 C10 18 12 23 18 23 C24 23 26 18 26 7" /><path d="M18 23 V32 Q18 42 27 42 H32 L35 36 L39 50 L43 30 L47 42 H51" /><circle cx="56" cy="42" r="4.5" /></svg>
-            <span>Grey's Universe</span>
+            <svg class="logo-icone" viewBox="0 0 64 56">
+                <circle cx="10" cy="5" r="2" />
+                <circle cx="26" cy="5" r="2" />
+                <path d="M10 7 C10 18 12 23 18 23 C24 23 26 18 26 7" />
+                <path d="M18 23 V32 Q18 42 27 42 H32 L35 36 L39 50 L43 30 L47 42 H51" />
+                <circle cx="56" cy="42" r="4.5" />
+            </svg>
+            Grey's Universe
         </a>
-        <nav class="menu-links">
+        <div class="menu-links">
             <a href="index.html">Início</a>
-            <a href="index.html#musicas">Músicas</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="curiosidades.html">Curiosidades</a>
+            <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
             <a href="dashboard.html">Dashboard</a>
-        </nav>
-    </header>
+            <span id="span_conta"></span>
+        </div>
+    </div>
 
     <main class="pagina-quiz">
         <div class="caixa-quiz" id="div_quiz"></div>
@@ -38,6 +48,32 @@
         // se não estiver logada, volta para o login
         if (sessionStorage.ID_USUARIO == null) {
             window.location = "login.html";
+        }
+
+        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
+        if (sessionStorage.ID_USUARIO != null) {
+            let nomeCompleto = sessionStorage.NOME_USUARIO;
+            let primeiroNome = "";
+            let espacos = 0;
+
+            for (let i = 0; i < nomeCompleto.length; i++) {
+                if (nomeCompleto[i] == " ") {
+                    espacos++;
+                }
+                if (espacos == 0) {
+                    primeiroNome += nomeCompleto[i];
+                }
+            }
+
+            span_conta.innerHTML = `<span class="ola-usuario">Olá, ${primeiroNome}</span>
+                                    <a href="#" class="botao-entrar" onclick="sair()">Sair</a>`;
+        } else {
+            span_conta.innerHTML = `<a href="login.html" class="botao-entrar">Entrar</a>`;
+        }
+
+        function sair() {
+            sessionStorage.clear();
+            window.location = "index.html";
         }
 
         // ===== PERGUNTAS =====
@@ -206,7 +242,7 @@
             div_quiz.innerHTML = html;
         }
 
-                function registrarTentativa() {
+        function registrarTentativa() {
             fetch("/tentativas/registrar", {
                 method: "POST",
                 headers: {

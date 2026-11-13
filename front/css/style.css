@@ -764,6 +764,14 @@ html {
 }
 
 /* a seção não fica escondida atrás do menu fixo */
-section {
-    scroll-margin-top: 130px;
+section,
+.secao {
+    scroll-margin-top: 100px;
+}
+
+/* "Olá, Nome" no menu */
+.ola-usuario {
+    color: #90CAF9;
+    margin-left: 22px;
+    font-size: 15px;
 }

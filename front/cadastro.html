@@ -32,10 +32,10 @@
             <a href="index.html">Início</a>
             <a href="sobre.html">Sobre</a>
             <a href="curiosidades.html">Curiosidades</a>
-            <a href="index.html#musicas">Músicas</a>
-            <a href="frases.html">Frases</a>
+            <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
-            <a href="login.html" class="botao-entrar">Entrar</a>
+            <a href="dashboard.html">Dashboard</a>
+            <span id="span_conta"></span>
         </div>
     </div>
 
@@ -46,7 +46,7 @@
         <div class="form-lateral">
             <h2>Junte-se a nós!</h2>
             <p>
-                Crie sua conta para escolher para conhecer sobre a série, escolher o seu personagem, jogar o quiz
+                Crie sua conta para conhecer a série, escolher o seu personagem, jogar o quiz
                 e acompanhar a sua evolução no universo de Grey's Anatomy.
             </p>
             <p class="frase-escrita">"Apenas se permita ser feliz."</p>
@@ -85,7 +85,34 @@
 
     </div>
 
-        <script>
+    <script>
+        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
+        if (sessionStorage.ID_USUARIO != null) {
+            let nomeCompleto = sessionStorage.NOME_USUARIO;
+            let primeiroNome = "";
+            let espacos = 0;
+
+            for (let i = 0; i < nomeCompleto.length; i++) {
+                if (nomeCompleto[i] == " ") {
+                    espacos++;
+                }
+                if (espacos == 0) {
+                    primeiroNome += nomeCompleto[i];
+                }
+            }
+
+            span_conta.innerHTML = `<span class="ola-usuario">Olá, ${primeiroNome}</span>
+                                    <a href="#" class="botao-entrar" onclick="sair()">Sair</a>`;
+        } else {
+            span_conta.innerHTML = `<a href="login.html" class="botao-entrar">Entrar</a>`;
+        }
+
+        function sair() {
+            sessionStorage.clear();
+            window.location = "index.html";
+        }
+
+        // ===== CADASTRO =====
         function cadastrar() {
             // pega o que foi digitado em cada campo
             let nome = ipt_nome.value;
