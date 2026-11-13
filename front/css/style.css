@@ -430,14 +430,6 @@ h1, h2, h3 {
 /* =========================================
    QUIZ
    ========================================= */
-.pagina-quiz {
-    min-height: calc(100vh - 130px);
-    padding: 48px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .caixa-quiz {
     width: 100%;
     max-width: 680px;
@@ -592,7 +584,7 @@ h1, h2, h3 {
     color: #9B2C2C;
 }
 
-/* aviso "Escolha uma alternativa" */
+/* página do quiz com foto de fundo */
 .pagina-quiz {
     min-height: calc(100vh - 130px);
     padding: 48px 16px;
@@ -602,6 +594,16 @@ h1, h2, h3 {
     background-image: url("../assets/imgs/fundo-quiz.png");
     background-size: cover;
     background-position: center;
+}
+
+/* aviso "Escolha uma alternativa" */
+.pagina-quiz .mensagem {
+    max-width: 680px;
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    color: #9B2C2C;
 }
 
 /* =========================================
@@ -686,6 +688,7 @@ h1, h2, h3 {
 
 .kpi-destaque big {
     color: #FFFFFF;
+    font-size: 28px;
 }
 
 .kpi-destaque p {
@@ -746,6 +749,21 @@ h1, h2, h3 {
     margin: 6px 0 16px 0;
 }
 
-.kpi-destaque big {
-    font-size: 28px;
+/* =========================================
+   MENU FIXO NO TOPO AO ROLAR A PÁGINA
+   ========================================= */
+.menu {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* rolagem suave ao clicar em links como "Playlist" */
+html {
+    scroll-behavior: smooth;
+}
+
+/* a seção não fica escondida atrás do menu fixo */
+section {
+    scroll-margin-top: 130px;
 }
