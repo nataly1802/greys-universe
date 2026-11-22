@@ -528,6 +528,19 @@ h1, h2, h3 {
     border-color: #0D47A1;
 }
 
+/* correção: alternativa certa (verde) e errada (vermelha) */
+.caixa-quiz .alternativa.certa {
+    background-color: #E3F5E9;
+    border-color: #2E9E5B;
+    cursor: default;
+}
+
+.caixa-quiz .alternativa.errada {
+    background-color: #FDECEC;
+    border-color: #C62828;
+    cursor: default;
+}
+
 /* botões dentro do quiz */
 .caixa-quiz .botao-form {
     width: 100%;

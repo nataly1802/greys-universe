@@ -198,17 +198,65 @@
             if (escolhida == -1) {
                 div_exibir.innerHTML = "Escolha uma alternativa antes de continuar.";
             } else {
-                if (escolhida == respostas[inicio + perguntaAtual]) {
-                    acertos++;
+                corrigir(escolhida);
+            }
+        }
+
+        // mostra se acertou ou errou e qual era a alternativa certa
+        function corrigir(escolhida) {
+            let posicao = inicio + perguntaAtual;
+            let correta = respostas[posicao];
+            let opcoes = [alternativaA[posicao], alternativaB[posicao], alternativaC[posicao], alternativaD[posicao]];
+
+            let html = `<p class="progresso">${nomesNiveis[nivelAtual - 1]} · Pergunta ${perguntaAtual + 1} de ${totalPerguntas}</p>
+                        <h2>${perguntas[posicao]}</h2>`;
+
+            // monta as alternativas de novo, agora travadas e coloridas
+            for (let i = 0; i < opcoes.length; i++) {
+                let classe = "alternativa";
+                let marcada = "";
+
+                if (i == correta) {
+                    classe += " certa";       // a certa fica verde
+                } else if (i == escolhida) {
+                    classe += " errada";      // a errada que a pessoa marcou fica vermelha
                 }
 
-                perguntaAtual++;
-
-                if (perguntaAtual < totalPerguntas) {
-                    mostrarPergunta();
-                } else {
-                    mostrarResultado();
+                if (i == escolhida) {
+                    marcada = "checked";      // deixa marcada a que a pessoa escolheu
                 }
+
+                html += `<label class="${classe}">
+                            <input type="radio" name="alternativa" disabled ${marcada}> ${opcoes[i]}
+                         </label>`;
+            }
+
+            if (escolhida == correta) {
+                acertos++;
+                html += `<p class="passou">✔ Resposta certa!</p>`;
+            } else {
+                html += `<p class="nao-passou">✘ Resposta errada. A alternativa correta é: <b>${opcoes[correta]}</b></p>`;
+            }
+
+            // na última pergunta o botão vira "Ver resultado"
+            let textoBotao = "Próxima pergunta";
+            if (perguntaAtual == totalPerguntas - 1) {
+                textoBotao = "Ver resultado";
+            }
+
+            html += `<button class="botao-form" onclick="proximaPergunta()">${textoBotao}</button>`;
+
+            div_quiz.innerHTML = html;
+            div_exibir.innerHTML = "";
+        }
+
+        function proximaPergunta() {
+            perguntaAtual++;
+
+            if (perguntaAtual < totalPerguntas) {
+                mostrarPergunta();
+            } else {
+                mostrarResultado();
             }
         }
 
