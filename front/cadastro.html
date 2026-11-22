@@ -68,7 +68,7 @@
 
             <div class="campo">
                 <label>Senha</label>
-                <input type="password" id="ipt_senha" placeholder="Mínimo 6 caracteres e 1 número">
+                <input type="password" id="ipt_senha" placeholder="Mínimo 6+ caracteres, 1 número, 1 maiúscula e 1 especial">
             </div>
 
             <div class="campo">
@@ -151,6 +151,30 @@
                 }
             }
 
+            
+            // VALIDAÇÃO 7: senha com pelo menos 1 letra maiúscula (vetor + for)
+            let maiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                              "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+            let qtdMaiusculas = 0;
+            for (let i = 0; i < senha.length; i++) {
+                for (let j = 0; j < maiusculas.length; j++) {
+                    if (senha[i] == maiusculas[j]) {
+                        qtdMaiusculas++;
+                    }
+                }
+            }
+
+            // VALIDAÇÃO 8: senha com pelo menos 1 caractere especial (vetor + for)
+            let especiais = ["!", "@", "#", "$", "%", "&", "*"];
+            let qtdEspeciais = 0;
+            for (let i = 0; i < senha.length; i++) {
+                for (let j = 0; j < especiais.length; j++) {
+                    if (senha[i] == especiais[j]) {
+                        qtdEspeciais++;
+                    }
+                }
+            }
+
             // CONFERÊNCIA: mostra o primeiro erro encontrado
             if (camposVazios > 0) {
                 div_exibir.innerHTML = "Preencha todos os campos.";
@@ -162,6 +186,10 @@
                 div_exibir.innerHTML = "A senha precisa ter pelo menos 6 caracteres.";
             } else if (qtdNumeros == 0) {
                 div_exibir.innerHTML = "A senha precisa ter pelo menos 1 número.";
+            } else if (qtdMaiusculas == 0) {
+                div_exibir.innerHTML = "A senha precisa ter pelo menos 1 letra maiúscula.";
+            } else if (qtdEspeciais == 0) {
+                div_exibir.innerHTML = "A senha precisa ter pelo menos 1 caractere especial (! @ # $ % & *).";
             } else if (senha != confirmacao) {
                 div_exibir.innerHTML = "As senhas não são iguais.";
             } else {
