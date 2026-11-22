@@ -30,8 +30,8 @@
         </a>
         <div class="menu-links">
             <a href="index.html">Início</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="curiosidades.html">Curiosidades</a>
+            <a href="index.html#sobre">Sobre</a>
+            
             <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
             <a href="dashboard.html">Dashboard</a>
@@ -141,7 +141,7 @@
                     sessionStorage.PERSONAGEM_USUARIO = idPersonagem;
                     div_exibir.innerHTML = "Personagem escolhido! Indo para o quiz...";
                     setTimeout(function () {
-                        window.location = "quiz.html";
+                        window.location = "index.html";
                     }, 1500);
                 } else {
                     div_exibir.innerHTML = "Não foi possível salvar sua escolha.";
