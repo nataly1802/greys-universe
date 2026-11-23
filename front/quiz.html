@@ -146,12 +146,46 @@
 
         mostrarNiveis();
 
+        // pergunta ao banco qual o maior nível que a pessoa já passou (70% ou mais)
         function mostrarNiveis() {
+            fetch(`/tentativas/nivel-concluido/${sessionStorage.ID_USUARIO}`)
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        resposta.json().then(function (dados) {
+                            let maiorConcluido = dados[0].maiorNivelConcluido;
+
+                            // null = ainda não passou em nenhum nível
+                            if (maiorConcluido == null) {
+                                maiorConcluido = 0;
+                            }
+
+                            montarNiveis(maiorConcluido);
+                        });
+                    } else {
+                        montarNiveis(0);
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                    montarNiveis(0);
+                });
+        }
+
+        // monta os botões: libera até o nível seguinte ao concluído, o resto fica travado
+        function montarNiveis(maiorConcluido) {
+            let liberadoAte = maiorConcluido + 1;
+
             let html = `<h1>Escolha o seu nível</h1>
-                        <p>Olá, ${sessionStorage.NOME_USUARIO}! Acerte 70% para provar que está pronta para o próximo nível.</p>`;
+                        <p>Olá, ${sessionStorage.NOME_USUARIO}! Acerte 70% em um nível para desbloquear o próximo.</p>`;
 
             for (let i = 0; i < nomesNiveis.length; i++) {
-                html += `<button class="botao-nivel" onclick="comecar(${i + 1})">${nomesNiveis[i]}</button>`;
+                let nivel = i + 1;
+
+                if (nivel <= liberadoAte) {
+                    html += `<button class="botao-nivel" onclick="comecar(${nivel})">${nomesNiveis[i]}</button>`;
+                } else {
+                    html += `<button class="botao-nivel bloqueado" disabled>🔒 ${nomesNiveis[i]}</button>`;
+                }
             }
 
             div_quiz.innerHTML = html;
