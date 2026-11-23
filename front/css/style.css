@@ -804,3 +804,51 @@ section,
     color: #0D47A1;
     margin: 6px 0;
 }
+
+/* =========================================
+   DASHBOARD – PERSONAGEM ESCOLHIDO
+   ========================================= */
+.dash-personagem {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    background-color: #FFFFFF;
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(6, 26, 64, 0.08);
+}
+
+.dash-personagem img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 3px solid #90CAF9;
+}
+
+.dash-personagem small {
+    display: block;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #0D47A1;
+}
+
+.dash-personagem h3 {
+    font-size: 24px;
+    color: #061A40;
+    margin: 4px 0;
+}
+
+.dash-personagem p {
+    font-size: 14px;
+    color: #3A4A6A;
+    margin: 0 0 8px 0;
+}
+
+.dash-personagem .botao {
+    padding: 8px 22px;
+    font-size: 14px;
+}

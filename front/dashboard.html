@@ -45,6 +45,10 @@
 
         <div class="mensagem" id="div_exibir"></div>
 
+        <!-- PERSONAGEM ESCOLHIDO -->
+        <section class="dash-personagem" id="div_personagem"></section>
+
+
         <!-- KPIs -->
         <section class="dash-kpis">
             <div class="kpi kpi-destaque" id="div_kpi_nivel"></div>
@@ -114,6 +118,7 @@
         buscarNivelConcluido();
         buscarEvolucao();
         buscarMediaPorNivel();
+        buscarPersonagem();
 
         // ===== SEMÁFORO =====
         function corSemaforo(porcentagem) {
@@ -456,6 +461,48 @@
                     }
                 }
             });
+        }
+
+        
+        // ===== PERSONAGEM ESCOLHIDO =====
+        function buscarPersonagem() {
+            let idPersonagem = sessionStorage.PERSONAGEM_USUARIO;
+
+            // se ainda não escolheu nenhum personagem
+            if (idPersonagem == null || idPersonagem == "null") {
+                div_personagem.innerHTML = `<div>
+                                                <small>Seu personagem</small>
+                                                <h3>Você ainda não escolheu</h3>
+                                                <a href="personagem.html" class="botao">Escolher personagem</a>
+                                            </div>`;
+                return;
+            }
+
+            // busca a lista de personagens (mesma rota da tela de escolha)
+            fetch("/personagens/listar")
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        resposta.json().then(function (personagens) {
+
+                            // procura, com for, o personagem que tem o id escolhido
+                            for (let i = 0; i < personagens.length; i++) {
+                                if (personagens[i].idPersonagem == idPersonagem) {
+                                    div_personagem.innerHTML = `
+                                        <img src="assets/imgs/${personagens[i].imagem}" alt="${personagens[i].nome}">
+                                        <div>
+                                            <small>Seu personagem</small>
+                                            <h3>${personagens[i].nome}</h3>
+                                            <p>${personagens[i].descricao}</p>
+                                            <a href="personagem.html" class="botao">Trocar personagem</a>
+                                        </div>`;
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
         }
     </script>
 </body>
