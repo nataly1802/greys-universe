@@ -91,18 +91,18 @@ INSERT INTO personagem (nome, descricao, imagem) VALUES
 -- =========================================================
 
 -- usuário de teste
-INSERT INTO usuario (nome, email, senha) VALUES
-('Teste', 'teste@email.com', '123456');
+-- INSERT INTO usuario (nome, email, senha) VALUES
+-- ('Teste', 'teste@email.com', '123456');
 
 -- usuário escolhe o personagem (o que a tela de personagem vai fazer)
-UPDATE usuario SET fkPersonagem = 2 WHERE idUsuario = 1;
+-- UPDATE usuario SET fkPersonagem = 2 WHERE idUsuario = 1;
 
 -- tentativas de teste
 -- fkNivel: 1 = facil, 2 = medio, 3 = dificil
-INSERT INTO tentativa (fkUsuario, fkNivel, acertos, totalPerguntas) VALUES
-(1, 1, 6, 10),
-(1, 1, 8, 10),
-(1, 2, 7, 10);
+-- INSERT INTO tentativa (fkUsuario, fkNivel, acertos, totalPerguntas) VALUES
+-- (1, 1, 6, 10),
+-- (1, 1, 8, 10),
+-- (1, 2, 7, 10);
 
 -- usuário com o nome do personagem escolhido (JOIN)
 SELECT usuario.nome AS Usuario,
