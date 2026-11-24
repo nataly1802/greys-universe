@@ -40,22 +40,16 @@ h1, h2, h3 {
 }
 
 .logo-icone {
-    width: 64px;
-    height: 56px;
+    width: 40px;
+    height: 45px;
 }
 
 .logo-icone path {
     fill: none;
     stroke: #BBDEFB;
-    stroke-width: 2.4;
+    stroke-width: 1.6;
     stroke-linecap: round;
     stroke-linejoin: round;
-}
-
-.logo-icone circle {
-    fill: #061A40;
-    stroke: #BBDEFB;
-    stroke-width: 2.4;
 }
 
 .menu-links a {
