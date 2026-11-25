@@ -24,7 +24,7 @@
         </a>
         <div class="menu-links">
             <a href="index.html">Início</a>
-            <a href="index.html#sobre">Sobre</a>
+            <a href="index.html#sobre">Sobre</a> <a href="index.html#historias">Histórias</a>
             
             <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
@@ -85,27 +85,6 @@
         </div>
     </div>
 
-    <div class="secao secao-clara">
-        <h2>Sobre o projeto</h2>
-        <div class="texto-sobre">
-            <p>
-                Comecei a assistir Grey's Anatomy aos 14 anos, por indicação da minha prima, e desde então
-                a série faz parte da minha vida. Ela me ensinou muito sobre amizade, coragem e sobre
-                seguir em frente mesmo nos dias difíceis.
-            </p>
-            <p>
-                O <b>Grey's Universe</b> nasceu para dois públicos: quem nunca assistiu e quer conhecer
-                a série, e quem já é fã e quer testar o quanto sabe. Aqui você conhece os personagens,
-                ouve as músicas marcantes, escolhe o personagem que mais combina com você, joga o quiz
-                em três níveis e acompanha a sua evolução no dashboard.
-            </p>
-            <p>
-                Este site é o meu Projeto Individual do 1º semestre de Análise e Desenvolvimento de
-                Sistemas na SPTech.
-            </p>
-        </div>
-    </div>
-
     <!-- 2. PERSONAGENS -->
     <div class="secao">
         <h2>Personagens marcantes</h2>
@@ -162,6 +141,22 @@
             </div>
         </div>
     </div>
+
+    <!-- HISTÓRIAS QUE MARCARAM (carrossel) -->
+    <section class="secao-historias" id="historias">
+        <h2 class="historias-titulo">Histórias que marcaram</h2>
+        <p class="historias-subtitulo">Conheça alguns momentos da série e o que eles nos ensinam</p>
+
+        <div class="carrossel-area">
+            <button class="botao-seta" onclick="historiaAnterior()">&#9664;</button>
+            <div class="carrossel" id="div_historia"></div>
+            <button class="botao-seta" onclick="proximaHistoria()">&#9654;</button>
+        </div>
+
+        <div class="carrossel-rodape">
+            <span class="contador" id="span_contador"></span>
+        </div>
+    </section>
 
     <!-- MÚSICAS MARCANTES -->
     <div class="secao" id="musicas">
@@ -273,6 +268,28 @@
         <a href="quiz.html" class="botao">Fazer o quiz</a>
     </div>
 
+    <!-- 5. SOBRE O PROJETO -->
+    <div class="secao secao-clara">
+        <h2>Sobre o projeto</h2>
+        <div class="texto-sobre">
+            <p>
+                Comecei a assistir Grey's Anatomy aos 14 anos, por indicação da minha prima, e desde então
+                a série faz parte da minha vida. Ela me ensinou muito sobre amizade, coragem e sobre
+                seguir em frente mesmo nos dias difíceis.
+            </p>
+            <p>
+                O <b>Grey's Universe</b> nasceu para dois públicos: quem nunca assistiu e quer conhecer
+                a série, e quem já é fã e quer testar o quanto sabe. Aqui você conhece os personagens,
+                ouve as músicas marcantes, escolhe o personagem que mais combina com você, joga o quiz
+                em três níveis e acompanha a sua evolução no dashboard.
+            </p>
+            <p>
+                Este site é o meu Projeto Individual do 1º semestre de Análise e Desenvolvimento de
+                Sistemas na SPTech.
+            </p>
+        </div>
+    </div>
+
     <script>
         // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
         if (sessionStorage.ID_USUARIO != null) {
@@ -299,6 +316,86 @@
             sessionStorage.clear();
             window.location = "index.html";
         }
+
+
+        // ===== CARROSSEL DE HISTÓRIAS =====
+        let titulosHistorias = [
+            "Grey's Anatomy: muito além da medicina",
+            "Meredith Grey e Cristina Yang — Uma amizade para a vida toda",
+            "O tiroteio no hospital — Até os mais fortes sentem medo",
+            "O acidente aéreo — Quando tudo muda em segundos",
+            "Meredith e Derek — Aprender a viver depois de uma despedida",
+            "April e Jackson — Cada pessoa sente a dor de uma maneira",
+            "Alex Karev — Nossas experiências não definem nosso futuro"
+        ];
+
+        let textosHistorias = [
+            "Grey's Anatomy é muito mais do que uma série sobre médicos e cirurgias. Ao longo de suas temporadas, acompanhamos personagens que enfrentam perdas, desafios, amizades, relacionamentos e transformações pessoais. Por trás de cada história, existem sentimentos e experiências que fazem refletir sobre a vida, as relações humanas e a importância de compreender nossas próprias emoções.",
+            "Em meio à competição e às dificuldades da residência médica, Meredith e Cristina constroem uma amizade baseada em confiança, lealdade e apoio. Mesmo com personalidades diferentes, tornam-se o porto seguro uma da outra. Sua história mostra que amizades verdadeiras não exigem perfeição, mas presença, compreensão e liberdade para crescer, mesmo quando os caminhos precisam se separar.",
+            "Um hospital, que deveria ser um lugar de segurança, transforma-se em cenário de terror quando um homem armado invade suas instalações. Médicos que estavam acostumados a salvar vidas precisam lutar pelas próprias. Depois do acontecimento, alguns personagens enfrentam traumas e dificuldades para retomar suas rotinas.",
+            "Um acidente aéreo muda completamente a vida de um grupo de médicos. Entre perdas irreparáveis, ferimentos e traumas, cada sobrevivente precisa encontrar uma maneira de continuar. Alguns perdem pessoas que amam, outros precisam reconstruir suas próprias vidas e aprender a conviver com uma realidade completamente diferente.",
+            "Meredith e Derek constroem uma história de amor marcada por desafios, conquistas e sonhos compartilhados. Porém, uma tragédia muda tudo quando Meredith perde a pessoa com quem imaginava passar o resto da vida. Sua trajetória mostra a dificuldade de enfrentar o luto e encontrar forças para continuar, especialmente quando existem filhos e uma vida inteira para reconstruir.",
+            "April e Jackson enfrentam uma das experiências mais dolorosas de suas vidas ao perderem seu filho, Samuel, pouco depois do nascimento. Apesar de compartilharem a mesma dor, os dois reagem de maneiras diferentes. Enquanto April busca conforto na fé e se afasta, Jackson sente necessidade de proximidade e diálogo. A dificuldade de compreender um ao outro acaba afetando o relacionamento.",
+            "Alex teve uma infância difícil, marcada por problemas familiares e responsabilidades que precisou assumir muito cedo. No início, demonstra ser uma pessoa arrogante e pouco aberta aos sentimentos, mas, ao longo da série, revela um lado sensível e cuidadoso, principalmente ao trabalhar com crianças. Sua trajetória mostra como experiências difíceis podem influenciar nossos comportamentos, mas não precisam determinar quem seremos."
+        ];
+
+        let licoesHistorias = [
+            "",
+            "Valorizar quem está ao nosso lado e entender que apoiar alguém também significa incentivar seus sonhos.",
+            "Ser forte não significa não sentir medo. Reconhecer nossas emoções e respeitar nossos limites também é uma forma de coragem.",
+            "A vida nem sempre segue nossos planos. Aprender a se adaptar às mudanças e valorizar as pessoas ao nosso redor é essencial.",
+            "Seguir em frente não significa esquecer alguém, mas aprender a continuar vivendo mesmo quando algo importante deixa de fazer parte da nossa rotina.",
+            "Nem todos enfrentam dificuldades da mesma maneira. Empatia significa respeitar sentimentos diferentes, ouvir e tentar compreender antes de julgar.",
+            "Amadurecer significa reconhecer nossos comportamentos, aprender com o passado e escolher quem queremos nos tornar."
+        ];
+
+        let fotosHistorias = [
+            "assets/imgs/elenco.jpg",
+            "assets/imgs/merEyang.jpg",
+            "assets/imgs/tiroteio.jpg",
+            "assets/imgs/aviao.jpg",
+            "assets/imgs/merEderik.jpg",
+            "assets/imgs/aprilEJack.jpg",
+            "assets/imgs/alex2.jpg"
+        ];
+
+        let historiaAtual = 0;
+
+        function mostrarHistoria() {
+            let blocoLicao = "";
+            if (licoesHistorias[historiaAtual] != "") {
+                blocoLicao = `<div class="licao"><strong>Lição:</strong> ${licoesHistorias[historiaAtual]}</div>`;
+            }
+
+            div_historia.innerHTML = `
+                <img class="carrossel-foto" src="${fotosHistorias[historiaAtual]}" alt="${titulosHistorias[historiaAtual]}">
+                <div class="carrossel-texto">
+                    <h3>${titulosHistorias[historiaAtual]}</h3>
+                    <p>${textosHistorias[historiaAtual]}</p>
+                    ${blocoLicao}
+                </div>
+            `;
+
+            span_contador.innerHTML = `${historiaAtual + 1} de ${titulosHistorias.length}`;
+        }
+
+        function proximaHistoria() {
+            historiaAtual = historiaAtual + 1;
+            if (historiaAtual == titulosHistorias.length) {
+                historiaAtual = 0;
+            }
+            mostrarHistoria();
+        }
+
+        function historiaAnterior() {
+            historiaAtual = historiaAtual - 1;
+            if (historiaAtual < 0) {
+                historiaAtual = titulosHistorias.length - 1;
+            }
+            mostrarHistoria();
+        }
+
+        mostrarHistoria();
     </script>
 
 </body>
