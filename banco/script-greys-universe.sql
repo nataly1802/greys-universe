@@ -25,11 +25,12 @@ imagem VARCHAR(45)
 -- 1 personagem pode ser escolhido por N usuários (1:N)
 -- fkPersonagem começa vazio (NULL) no cadastro e é preenchido
 -- quando o usuário escolhe o personagem (UPDATE)
+-- email UNIQUE: não deixa cadastrar duas contas com o mesmo e-mail
 -- ---------------------------------------------------------
 CREATE TABLE usuario (
 idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
-email VARCHAR(45),
+email VARCHAR(45) UNIQUE,
 senha VARCHAR(45),
 fkPersonagem INT,
 CONSTRAINT fkPersonagemUsuario FOREIGN KEY (fkPersonagem)
@@ -78,7 +79,7 @@ INSERT INTO personagem (nome, descricao, imagem) VALUES
 ('Meredith Grey', 'A protagonista: residente que se torna uma das maiores cirurgiãs do hospital.', 'meredith.webp'),
 ('Cristina Yang', 'Cirurgiã cardiotorácica brilhante, competitiva e a melhor amiga de Meredith.', 'cristina.jpg'),
 ('Derek Shepherd', 'Neurocirurgião conhecido como McDreamy.', 'derek.jpg'),
-('Miranda Bailey', 'Exigente e justa, conhecida como "A Nazista" pelos residentes.', 'bailey.jpg'),
+('Miranda Bailey', 'Exigente e justa, a residente mais respeitada pelos internos.', 'bailey.jpg'),
 ('Alex Karev', 'Começa arrogante e se torna um dedicado cirurgião pediátrico.', 'alex.jpg'),
 ('Richard Webber', 'Chefe de cirurgia e mentor de várias gerações de médicos.', 'webber.jpg'),
 ('Mark Sloan', 'Cirurgião plástico conhecido como McSteamy, melhor amigo de Derek.', 'mark.jpg'),
@@ -129,6 +130,7 @@ SELECT nivel.nome AS Nivel,
 	GROUP BY nivel.nome;
 
 -- =========================================================
+-- (troque o 1 pelo id do seu usuário para testar)
 -- DASHBOARD – SEU PRONTUÁRIO DE DESEMPENHO
 -- =========================================================
 
@@ -137,7 +139,7 @@ SELECT fkNivel,
        ROUND(acertos * 100 / totalPerguntas) AS porcentagem,
        dtTentativa
     FROM tentativa
-    WHERE fkUsuario = 8
+    WHERE fkUsuario = 1
     ORDER BY idTentativa;
 
 -- GRÁFICO DE BARRAS: média de % de acertos por nível
@@ -145,7 +147,7 @@ SELECT nivel.nome AS nivel,
        ROUND(AVG(acertos * 100 / totalPerguntas)) AS mediaPorcentagem
     FROM tentativa JOIN nivel
         ON fkNivel = idNivel
-    WHERE fkUsuario = 8
+    WHERE fkUsuario = 1
     GROUP BY idNivel, nivel.nome
     ORDER BY idNivel;
 
@@ -154,10 +156,10 @@ SELECT ROUND(MAX(acertos * 100 / totalPerguntas)) AS melhorPorcentagem,
        ROUND(AVG(acertos * 100 / totalPerguntas)) AS mediaPorcentagem,
        COUNT(idTentativa) AS totalTentativas
     FROM tentativa
-    WHERE fkUsuario = 8;
+    WHERE fkUsuario = 1;
 
 -- KPI NÍVEL ATUAL: maior nível em que a pessoa já fez 70% ou mais
 SELECT MAX(fkNivel) AS maiorNivelConcluido
     FROM tentativa
-    WHERE fkUsuario = 8
+    WHERE fkUsuario = 1
       AND acertos * 100 / totalPerguntas >= 70;
