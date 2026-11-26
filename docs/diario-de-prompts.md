@@ -21,4 +21,8 @@
 | 24/11/2026 | Claude | Opções de logo nova | Desenhos de logo em SVG | Escolhi a Space Needle de Seattle e pedi o traço mais fino e com mais detalhes |
 | 24/11/2026 | Claude | Ajuda para fazer um carrossel com histórias da série | Lógica com vetores paralelos, if e .length, e o CSS do carrossel | Escrevi as histórias e as lições, escolhi as fotos, tirei o último card, pedi o texto justificado e as setas dos lados |
 | 24/11/2026 | Claude | Opinião sobre a ordem das seções da Home | Sugestão de ordem do geral para o específico | Coloquei o Sobre o projeto no final e o link Histórias no menu |
-| 25/11/2026 | Claude | Ajuda para montar os slides da apresentação | Rascunho dos slides e do roteiro | [vou ajustar os textos e o visual] |
+| 25/11/2026 | Claude | Ajuda para montar os slides da apresentação | Rascunho dos slides e do roteiro | Deixei os slides menos técnicos e mais socioemocionais, tirei os slides de arquitetura e de matemática, coloquei as fotos das pessoas na gratidão e editei a capa, o banco e a gestão |
+| 25/11/2026 | Claude | Ajustes finais da documentação | Revisão das sprints, da capa e das quebras de página | Coloquei os nomes dos professores, mudei para 3 sprints como na faculdade e pedi a conclusão sem termos técnicos |
+| 25/11/2026 | Claude | Ajuda para estudar o código para a banca | Guia de estudo, aula narrada e um quiz de treino | Estudei o caminho Tela, Fetch, Rota, Controller, Model e Banco e treinei as respostas em voz alta |
+| 25/11/2026 | Claude | Últimos ajustes nos slides | Print do contexto da documentação e ícone do ODS 3 | Tirei os avós e os professores da gratidão, troquei "grupo de TI" por "grupo de PI", voltei o desafio técnico com a IA como copiloto e coloquei a conclusão no final |
+| 26/11/2026 | Claude | Revisão do ensaio da apresentação | Comentários sobre o tempo e o que faltou falar | Corrigi a explicação do banco, cortei partes da Home e decidi fazer cadastro, login e quiz ao vivo |
