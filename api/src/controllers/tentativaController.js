@@ -1,6 +1,5 @@
 let tentativaModel = require("../models/tentativaModel");
 
-// ===== QUIZ: salvar uma tentativa =====
 function registrar(req, res) {
     let idUsuario = req.body.idUsuarioServer;
     let idNivel = req.body.idNivelServer;
@@ -28,7 +27,6 @@ function registrar(req, res) {
     }
 }
 
-// ===== DASHBOARD: gráfico de linha =====
 function buscarEvolucao(req, res) {
     let idUsuario = req.params.idUsuario;
 
@@ -47,7 +45,6 @@ function buscarEvolucao(req, res) {
         });
 }
 
-// ===== DASHBOARD: gráfico de barras =====
 function buscarMediaPorNivel(req, res) {
     let idUsuario = req.params.idUsuario;
 
@@ -66,7 +63,6 @@ function buscarMediaPorNivel(req, res) {
         });
 }
 
-// ===== DASHBOARD: KPIs =====
 function buscarKpis(req, res) {
     let idUsuario = req.params.idUsuario;
 
@@ -81,7 +77,6 @@ function buscarKpis(req, res) {
         });
 }
 
-// ===== DASHBOARD: KPI nível atual =====
 function buscarNivelConcluido(req, res) {
     let idUsuario = req.params.idUsuario;
 

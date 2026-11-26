@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha seu personagem | Grey's Universe</title>
 
-    <!-- FONTES DO GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -16,7 +15,6 @@
 
 <body>
 
-    <!-- MENU -->
     <div class="menu">
         <a href="index.html" class="logo">
             <svg class="logo-icone" viewBox="0 0 64 72"><path d="M32 1 V11"/><path d="M28 12 Q32 8.5 36 12"/><path d="M16 15 Q32 10.5 48 15 Q32 19.5 16 15 Z"/><path d="M19 15 H45"/><path d="M23 18.2 L27.5 22 H36.5 L41 18.2"/><path d="M27.5 22 Q31 36 29.5 44 L24 64"/><path d="M36.5 22 Q33 36 34.5 44 L40 64"/><path d="M32 22 V64"/><path d="M28.6 42.5 Q32 44 35.4 42.5"/><path d="M2 64 H9 L11.5 58.5 L14.5 69 L17 64 H47 L49.5 60 L52 66 L54 64 H62"/></svg>
@@ -25,7 +23,7 @@
         <div class="menu-links">
             <a href="index.html">Início</a>
             <a href="index.html#sobre">Sobre</a> <a href="index.html#historias">Histórias</a> <a href="index.html#historias">Histórias</a>
-            
+
             <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
             <a href="dashboard.html">Dashboard</a>
@@ -33,24 +31,21 @@
         </div>
     </div>
 
-    <!-- ESCOLHA DE PERSONAGEM -->
     <div class="secao pagina-personagem">
         <h2 id="titulo_boas_vindas">Escolha seu personagem</h2>
         <p>Qual personagem de Grey's Anatomy combina mais com você?</p>
 
         <div class="mensagem" id="div_exibir"></div>
 
-        <!-- os cartões são montados aqui pelo JavaScript -->
         <div class="cartoes" id="div_personagens"></div>
     </div>
 
     <script>
-        // se ninguém estiver logado, volta para o login
+
         if (sessionStorage.ID_USUARIO == null) {
             window.location = "login.html";
         }
 
-        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
         if (sessionStorage.ID_USUARIO != null) {
             let nomeCompleto = sessionStorage.NOME_USUARIO;
             let primeiroNome = "";
@@ -76,12 +71,10 @@
             window.location = "index.html";
         }
 
-        // ===== ESCOLHA DE PERSONAGEM =====
         titulo_boas_vindas.innerHTML = "Olá, " + sessionStorage.NOME_USUARIO + "! Escolha seu personagem";
 
         listarPersonagens();
 
-        // BUSCA OS PERSONAGENS NA API E MONTA OS CARTÕES
         function listarPersonagens() {
             fetch("/personagens/listar")
                 .then(function (resposta) {
@@ -117,7 +110,6 @@
                 });
         }
 
-        // SALVA O PERSONAGEM ESCOLHIDO
         function escolher(idPersonagem) {
             let dadosEscolha = {
                 idUsuarioServer: sessionStorage.ID_USUARIO,

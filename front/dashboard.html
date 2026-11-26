@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Grey's Universe</title>
 
-    <!-- FONTES DO GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -16,7 +15,6 @@
 
 <body>
 
-    <!-- MENU -->
     <div class="menu">
         <a href="index.html" class="logo">
             <svg class="logo-icone" viewBox="0 0 64 72"><path d="M32 1 V11"/><path d="M28 12 Q32 8.5 36 12"/><path d="M16 15 Q32 10.5 48 15 Q32 19.5 16 15 Z"/><path d="M19 15 H45"/><path d="M23 18.2 L27.5 22 H36.5 L41 18.2"/><path d="M27.5 22 Q31 36 29.5 44 L24 64"/><path d="M36.5 22 Q33 36 34.5 44 L40 64"/><path d="M32 22 V64"/><path d="M28.6 42.5 Q32 44 35.4 42.5"/><path d="M2 64 H9 L11.5 58.5 L14.5 69 L17 64 H47 L49.5 60 L52 66 L54 64 H62"/></svg>
@@ -25,7 +23,7 @@
         <div class="menu-links">
             <a href="index.html">Início</a>
             <a href="index.html#sobre">Sobre</a> <a href="index.html#historias">Histórias</a>
-            
+
             <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
             <a href="dashboard.html">Dashboard</a>
@@ -39,11 +37,8 @@
 
         <div class="mensagem" id="div_exibir"></div>
 
-        <!-- PERSONAGEM ESCOLHIDO -->
         <section class="dash-personagem" id="div_personagem"></section>
 
-
-        <!-- KPIs -->
         <section class="dash-kpis">
             <div class="kpi kpi-destaque" id="div_kpi_nivel"></div>
             <div class="kpi" id="div_kpi_melhor"></div>
@@ -51,7 +46,6 @@
             <div class="kpi" id="div_kpi_evolucao"></div>
         </section>
 
-        <!-- GRÁFICOS -->
         <section class="dash-graficos">
             <div class="dash-card">
                 <h3>Evolução dos acertos por tentativa (%)</h3>
@@ -66,16 +60,14 @@
         </section>
     </main>
 
-    <!-- BIBLIOTECA CHART.JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
     <script>
-        // se não estiver logada, volta para o login
+
         if (sessionStorage.ID_USUARIO == null) {
             window.location = "login.html";
         }
 
-        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
         if (sessionStorage.ID_USUARIO != null) {
             let nomeCompleto = sessionStorage.NOME_USUARIO;
             let primeiroNome = "";
@@ -101,7 +93,6 @@
             window.location = "index.html";
         }
 
-        // ===== DASHBOARD =====
         let idUsuario = sessionStorage.ID_USUARIO;
         let nomesNiveis = ["Interno", "Residente", "Cirurgião Atendente"];
         let nomesNoBanco = ["facil", "medio", "dificil"];
@@ -114,7 +105,6 @@
         buscarMediaPorNivel();
         buscarPersonagem();
 
-        // ===== SEMÁFORO =====
         function corSemaforo(porcentagem) {
             if (porcentagem >= meta) {
                 return "verde";
@@ -125,7 +115,6 @@
             }
         }
 
-        // mesma regra, mas devolve a cor em código (para o gráfico)
         function corSemaforoHex(porcentagem) {
             if (porcentagem >= meta) {
                 return "#2E9E5B";
@@ -146,7 +135,6 @@
             }
         }
 
-        // ===== KPIs: melhor resultado e média geral =====
         function buscarKpis() {
             fetch(`/tentativas/kpis/${idUsuario}`)
                 .then(function (resposta) {
@@ -184,7 +172,6 @@
                                        <p>em ${total} tentativas · ${textoMeta(media)}</p>`;
         }
 
-        // ===== KPI: nível atual =====
         function buscarNivelConcluido() {
             fetch(`/tentativas/nivel-concluido/${idUsuario}`)
                 .then(function (resposta) {
@@ -219,7 +206,6 @@
                                        <p>${texto}</p>`;
         }
 
-        // ===== KPI EVOLUÇÃO + GRÁFICO DE LINHA =====
         function buscarEvolucao() {
             fetch(`/tentativas/evolucao/${idUsuario}`)
                 .then(function (resposta) {
@@ -239,7 +225,7 @@
         }
 
         function mostrarEvolucao(dados) {
-            // o nível da ÚLTIMA tentativa é o que a pessoa está jogando agora
+
             let ultimoNivel = dados[dados.length - 1].fkNivel;
             let nomeNivel = nomesNiveis[ultimoNivel - 1];
 
@@ -267,7 +253,7 @@
                                               <big>${ultima}%</big>
                                               <p>1ª tentativa: 0% → última: ${ultima}%</p>`;
             } else {
-                // acréscimo percentual: (final - inicial) ÷ inicial × 100
+
                 let evolucao = Math.round((ultima - primeira) * 100 / primeira);
                 let sinal = "";
 
@@ -287,7 +273,7 @@
         }
 
         function montarGraficoEvolucao() {
-            // 1) separa as porcentagens em um vetor para cada nível
+
             let interno = [];
             let residente = [];
             let cirurgiao = [];
@@ -304,7 +290,6 @@
                 }
             }
 
-            // 2) descobre qual nível tem mais tentativas (tamanho do eixo X)
             let maior = interno.length;
             if (residente.length > maior) {
                 maior = residente.length;
@@ -313,7 +298,6 @@
                 maior = cirurgiao.length;
             }
 
-            // 3) monta os rótulos ("1ª", "2ª"...) e a linha da meta (70 em todos)
             let rotulos = [];
             let linhaMeta = [];
             for (let i = 0; i < maior; i++) {
@@ -321,7 +305,6 @@
                 linhaMeta.push(meta);
             }
 
-            // 4) desenha o gráfico
             new Chart(grafico_evolucao, {
                 type: "line",
                 data: {
@@ -383,7 +366,6 @@
             });
         }
 
-        // ===== GRÁFICO DE BARRAS: média por nível =====
         function buscarMediaPorNivel() {
             fetch(`/tentativas/media-nivel/${idUsuario}`)
                 .then(function (resposta) {
@@ -407,7 +389,6 @@
             for (let i = 0; i < dados.length; i++) {
                 let media = Number(dados[i].mediaPorcentagem);
 
-                // troca "facil" por "Interno", "medio" por "Residente"...
                 for (let j = 0; j < nomesNoBanco.length; j++) {
                     if (dados[i].nivel == nomesNoBanco[j]) {
                         rotulos.push(nomesNiveis[j]);
@@ -457,12 +438,9 @@
             });
         }
 
-        
-        // ===== PERSONAGEM ESCOLHIDO =====
         function buscarPersonagem() {
             let idPersonagem = sessionStorage.PERSONAGEM_USUARIO;
 
-            // se ainda não escolheu nenhum personagem
             if (idPersonagem == null || idPersonagem == "null") {
                 div_personagem.innerHTML = `<div>
                                                 <small>Seu personagem</small>
@@ -472,13 +450,11 @@
                 return;
             }
 
-            // busca a lista de personagens (mesma rota da tela de escolha)
             fetch("/personagens/listar")
                 .then(function (resposta) {
                     if (resposta.ok) {
                         resposta.json().then(function (personagens) {
 
-                            // procura, com for, o personagem que tem o id escolhido
                             for (let i = 0; i < personagens.length; i++) {
                                 if (personagens[i].idPersonagem == idPersonagem) {
                                     div_personagem.innerHTML = `

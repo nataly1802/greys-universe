@@ -1,6 +1,5 @@
 let usuarioModel = require("../models/usuarioModel");
 
-// LOGIN
 function autenticar(req, res) {
     let email = req.body.emailServer;
     let senha = req.body.senhaServer;
@@ -32,7 +31,6 @@ function autenticar(req, res) {
     }
 }
 
-// CADASTRO
 function cadastrar(req, res) {
     let nome = req.body.nomeServer;
     let email = req.body.emailServer;
@@ -56,7 +54,6 @@ function cadastrar(req, res) {
     }
 }
 
-// ESCOLHA DE PERSONAGEM
 function atualizarPersonagem(req, res) {
     let idUsuario = req.body.idUsuarioServer;
     let idPersonagem = req.body.idPersonagemServer;

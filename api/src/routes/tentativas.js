@@ -3,12 +3,10 @@ let router = express.Router();
 
 let tentativaController = require("../controllers/tentativaController");
 
-// QUIZ: salvar tentativa (POST = envia dados)
 router.post("/registrar", function (req, res) {
     tentativaController.registrar(req, res);
 });
 
-// DASHBOARD (GET = só busca dados)
 router.get("/evolucao/:idUsuario", function (req, res) {
     tentativaController.buscarEvolucao(req, res);
 });

@@ -1,6 +1,5 @@
 let mysql = require("mysql2");
 
-// dados de conexão: vêm do arquivo .env.dev
 let mySqlConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
@@ -9,7 +8,6 @@ let mySqlConfig = {
     port: process.env.DB_PORT
 };
 
-// função que roda qualquer comando SQL no banco
 function executar(instrucao) {
 
     if (process.env.AMBIENTE_PROCESSO != "producao" && process.env.AMBIENTE_PROCESSO != "desenvolvimento") {

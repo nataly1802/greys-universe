@@ -1,6 +1,5 @@
 let database = require("../database/config");
 
-// LOGIN: procura um usuário com esse e-mail e essa senha
 function autenticar(email, senha) {
     let instrucaoSql = `
         SELECT idUsuario, nome, email, fkPersonagem
@@ -11,7 +10,6 @@ function autenticar(email, senha) {
     return database.executar(instrucaoSql);
 }
 
-// CADASTRO: insere um novo usuário (sem personagem ainda)
 function cadastrar(nome, email, senha) {
     let instrucaoSql = `
         INSERT INTO usuario (nome, email, senha)
@@ -21,7 +19,6 @@ function cadastrar(nome, email, senha) {
     return database.executar(instrucaoSql);
 }
 
-// ESCOLHA DE PERSONAGEM: grava o personagem escolhido no usuário
 function atualizarPersonagem(idUsuario, idPersonagem) {
     let instrucaoSql = `
         UPDATE usuario SET fkPersonagem = ${idPersonagem}

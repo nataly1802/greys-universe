@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz | Grey's Universe</title>
 
-    <!-- FONTES DO GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -16,7 +15,6 @@
 
 <body>
 
-    <!-- MENU -->
     <div class="menu">
         <a href="index.html" class="logo">
             <svg class="logo-icone" viewBox="0 0 64 72"><path d="M32 1 V11"/><path d="M28 12 Q32 8.5 36 12"/><path d="M16 15 Q32 10.5 48 15 Q32 19.5 16 15 Z"/><path d="M19 15 H45"/><path d="M23 18.2 L27.5 22 H36.5 L41 18.2"/><path d="M27.5 22 Q31 36 29.5 44 L24 64"/><path d="M36.5 22 Q33 36 34.5 44 L40 64"/><path d="M32 22 V64"/><path d="M28.6 42.5 Q32 44 35.4 42.5"/><path d="M2 64 H9 L11.5 58.5 L14.5 69 L17 64 H47 L49.5 60 L52 66 L54 64 H62"/></svg>
@@ -25,7 +23,7 @@
         <div class="menu-links">
             <a href="index.html">Início</a>
             <a href="index.html#sobre">Sobre</a> <a href="index.html#historias">Histórias</a>
-            
+
             <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
             <a href="dashboard.html">Dashboard</a>
@@ -39,12 +37,11 @@
     </main>
 
     <script>
-        // se não estiver logada, volta para o login
+
         if (sessionStorage.ID_USUARIO == null) {
             window.location = "login.html";
         }
 
-        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
         if (sessionStorage.ID_USUARIO != null) {
             let nomeCompleto = sessionStorage.NOME_USUARIO;
             let primeiroNome = "";
@@ -70,10 +67,8 @@
             window.location = "index.html";
         }
 
-        // ===== PERGUNTAS =====
-        // 0 a 9 = Interno | 10 a 19 = Residente | 20 a 29 = Cirurgião Atendente
         let perguntas = [
-            // Interno
+
             "Em que cidade se passa Grey's Anatomy?",
             "Qual é o nome da protagonista?",
             "Qual é o apelido de Derek Shepherd?",
@@ -84,7 +79,7 @@
             "Qual é a especialidade de Cristina?",
             "Quem é a mãe de Meredith, uma cirurgiã famosa?",
             "Qual é o nome do hospital na 1ª temporada?",
-            // Residente
+
             "Em que ano a série estreou?",
             "Qual é a relação entre Lexie e Meredith?",
             "Qual é a especialidade de Callie Torres?",
@@ -95,7 +90,7 @@
             "Com quem April Kepner se casa depois de deixar o noivo no altar?",
             "Para que país Cristina se muda quando sai da série?",
             "Qual é o nome do pai de Meredith?",
-            // Cirurgião Atendente
+
             "Em que temporada Derek morre?",
             "Qual é o nome da série derivada estrelada por Addison?",
             "Quantos filhos Meredith tem?",
@@ -124,23 +119,20 @@
                             "2009", "Nenhuma", "Obstetrícia", "Cardiologia", "Geral", "Amelia Shepherd", "Na praia", "George O'Malley", "Japão", "George Grey",
                             "12ª", "The Resident", "4", "Harriet", "Toby", "Explosão", "Meredith e Derek", "Diabetes", "Greg Berlanti", "MacLaren's"];
 
-        // posição da alternativa certa: 0 = A, 1 = B, 2 = C, 3 = D
         let respostas = [1, 2, 1, 0, 2, 1, 0, 2, 1, 1,
                          1, 2, 1, 2, 0, 1, 2, 1, 2, 1,
                          2, 1, 2, 1, 2, 1, 2, 1, 1, 0];
 
         let nomesNiveis = ["Interno", "Residente", "Cirurgião Atendente"];
 
-        // ===== CONTROLE DO JOGO =====
-        let nivelAtual = 0;      // 1, 2 ou 3 (igual ao idNivel do banco)
-        let inicio = 0;          // posição da 1ª pergunta do nível nos vetores
-        let perguntaAtual = 0;   // de 0 a 9
+        let nivelAtual = 0;
+        let inicio = 0;
+        let perguntaAtual = 0;
         let acertos = 0;
         let totalPerguntas = 10;
 
         mostrarNiveis();
 
-        // pergunta ao banco qual o maior nível que a pessoa já passou (70% ou mais)
         function mostrarNiveis() {
             fetch(`/tentativas/nivel-concluido/${sessionStorage.ID_USUARIO}`)
                 .then(function (resposta) {
@@ -148,7 +140,6 @@
                         resposta.json().then(function (dados) {
                             let maiorConcluido = dados[0].maiorNivelConcluido;
 
-                            // null = ainda não passou em nenhum nível
                             if (maiorConcluido == null) {
                                 maiorConcluido = 0;
                             }
@@ -165,7 +156,6 @@
                 });
         }
 
-        // monta os botões: libera até o nível seguinte ao concluído, o resto fica travado
         function montarNiveis(maiorConcluido) {
             let liberadoAte = maiorConcluido + 1;
 
@@ -215,7 +205,7 @@
 
         function responder() {
             let bolinhas = document.getElementsByName("alternativa");
-            let escolhida = -1;   // -1 = nada marcado
+            let escolhida = -1;
 
             for (let i = 0; i < bolinhas.length; i++) {
                 if (bolinhas[i].checked) {
@@ -230,7 +220,6 @@
             }
         }
 
-        // mostra se acertou ou errou e qual era a alternativa certa
         function corrigir(escolhida) {
             let posicao = inicio + perguntaAtual;
             let correta = respostas[posicao];
@@ -239,19 +228,18 @@
             let html = `<p class="progresso">${nomesNiveis[nivelAtual - 1]} · Pergunta ${perguntaAtual + 1} de ${totalPerguntas}</p>
                         <h2>${perguntas[posicao]}</h2>`;
 
-            // monta as alternativas de novo, agora travadas e coloridas
             for (let i = 0; i < opcoes.length; i++) {
                 let classe = "alternativa";
                 let marcada = "";
 
                 if (i == correta) {
-                    classe += " certa";       // a certa fica verde
+                    classe += " certa";
                 } else if (i == escolhida) {
-                    classe += " errada";      // a errada que a pessoa marcou fica vermelha
+                    classe += " errada";
                 }
 
                 if (i == escolhida) {
-                    marcada = "checked";      // deixa marcada a que a pessoa escolheu
+                    marcada = "checked";
                 }
 
                 html += `<label class="${classe}">
@@ -266,7 +254,6 @@
                 html += `<p class="nao-passou">✘ Resposta errada. A alternativa correta é: <b>${opcoes[correta]}</b></p>`;
             }
 
-            // na última pergunta o botão vira "Ver resultado"
             let textoBotao = "Próxima pergunta";
             if (perguntaAtual == totalPerguntas - 1) {
                 textoBotao = "Ver resultado";
@@ -291,8 +278,8 @@
         function mostrarResultado() {
             registrarTentativa();
 
-            let porcentagem = acertos * 100 / totalPerguntas;   // regra de três
-            let minimo = 70 * totalPerguntas / 100;             // 70% de 10 = 7
+            let porcentagem = acertos * 100 / totalPerguntas;
+            let minimo = 70 * totalPerguntas / 100;
 
             let html = `<h1>Resultado – ${nomesNiveis[nivelAtual - 1]}</h1>
                         <div class="resultado-numeros">

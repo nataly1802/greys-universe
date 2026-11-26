@@ -1,6 +1,5 @@
 let database = require("../database/config");
 
-// busca todos os personagens do banco
 function listar() {
     let instrucaoSql = `
         SELECT idPersonagem, nome, descricao, imagem

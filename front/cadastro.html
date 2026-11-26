@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro | Grey's Universe</title>
 
-    <!-- FONTES DO GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Lato:wght@400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -16,7 +15,6 @@
 
 <body>
 
-    <!-- MENU -->
     <div class="menu">
         <a href="index.html" class="logo">
             <svg class="logo-icone" viewBox="0 0 64 72"><path d="M32 1 V11"/><path d="M28 12 Q32 8.5 36 12"/><path d="M16 15 Q32 10.5 48 15 Q32 19.5 16 15 Z"/><path d="M19 15 H45"/><path d="M23 18.2 L27.5 22 H36.5 L41 18.2"/><path d="M27.5 22 Q31 36 29.5 44 L24 64"/><path d="M36.5 22 Q33 36 34.5 44 L40 64"/><path d="M32 22 V64"/><path d="M28.6 42.5 Q32 44 35.4 42.5"/><path d="M2 64 H9 L11.5 58.5 L14.5 69 L17 64 H47 L49.5 60 L52 66 L54 64 H62"/></svg>
@@ -25,7 +23,7 @@
         <div class="menu-links">
             <a href="index.html">Início</a>
             <a href="index.html#sobre">Sobre</a> <a href="index.html#historias">Histórias</a> <a href="index.html#historias">Histórias</a>
-            
+
             <a href="index.html#musicas">Playlist</a>
             <a href="quiz.html">Quiz</a>
             <a href="dashboard.html">Dashboard</a>
@@ -33,10 +31,8 @@
         </div>
     </div>
 
-    <!-- CAIXA DO CADASTRO -->
     <div class="pagina-form">
 
-        <!-- LADO ESQUERDO -->
         <div class="form-lateral">
             <h2>Junte-se a nós!</h2>
             <p>
@@ -46,7 +42,6 @@
             <p class="frase-escrita">"Apenas se permita ser feliz."</p>
         </div>
 
-        <!-- LADO DIREITO: FORMULÁRIO -->
         <div class="form-conteudo">
             <h2>Criar conta</h2>
 
@@ -80,7 +75,7 @@
     </div>
 
     <script>
-        // ===== MENU: Entrar ou "Olá, Nome" + Sair =====
+
         if (sessionStorage.ID_USUARIO != null) {
             let nomeCompleto = sessionStorage.NOME_USUARIO;
             let primeiroNome = "";
@@ -106,15 +101,13 @@
             window.location = "index.html";
         }
 
-        // ===== CADASTRO =====
         function cadastrar() {
-            // pega o que foi digitado em cada campo
+
             let nome = ipt_nome.value;
             let email = ipt_email.value;
             let senha = ipt_senha.value;
             let confirmacao = ipt_confirmacao.value;
 
-            // VALIDAÇÃO 1: campos vazios (vetor + for + contador)
             let campos = [nome, email, senha, confirmacao];
             let camposVazios = 0;
             for (let i = 0; i < campos.length; i++) {
@@ -123,7 +116,6 @@
                 }
             }
 
-            // VALIDAÇÃO 3: e-mail (for passando letra por letra e contando)
             let qtdArroba = 0;
             let qtdPonto = 0;
             for (let i = 0; i < email.length; i++) {
@@ -134,7 +126,6 @@
                 }
             }
 
-            // VALIDAÇÃO 5: senha com pelo menos 1 número (vetor + for)
             let numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
             let qtdNumeros = 0;
             for (let i = 0; i < senha.length; i++) {
@@ -145,8 +136,6 @@
                 }
             }
 
-            
-            // VALIDAÇÃO 7: senha com pelo menos 1 letra maiúscula (vetor + for)
             let maiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
                               "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
             let qtdMaiusculas = 0;
@@ -158,7 +147,6 @@
                 }
             }
 
-            // VALIDAÇÃO 8: senha com pelo menos 1 caractere especial (vetor + for)
             let especiais = ["!", "@", "#", "$", "%", "&", "*"];
             let qtdEspeciais = 0;
             for (let i = 0; i < senha.length; i++) {
@@ -169,7 +157,6 @@
                 }
             }
 
-            // CONFERÊNCIA: mostra o primeiro erro encontrado
             if (camposVazios > 0) {
                 div_exibir.innerHTML = "Preencha todos os campos.";
             } else if (nome.length < 3) {
@@ -187,7 +174,7 @@
             } else if (senha != confirmacao) {
                 div_exibir.innerHTML = "As senhas não são iguais.";
             } else {
-                // objeto com os dados que vão para a API
+
                 let dadosUsuario = {
                     nomeServer: nome,
                     emailServer: email,

@@ -1,6 +1,5 @@
 let database = require("../database/config");
 
-// ===== QUIZ: salvar uma tentativa =====
 function registrar(idUsuario, idNivel, acertos, totalPerguntas) {
     let instrucaoSql = `
         INSERT INTO tentativa (fkUsuario, fkNivel, acertos, totalPerguntas)
@@ -11,7 +10,6 @@ function registrar(idUsuario, idNivel, acertos, totalPerguntas) {
     return database.executar(instrucaoSql);
 }
 
-// ===== DASHBOARD: gráfico de linha (evolução por tentativa) =====
 function buscarEvolucao(idUsuario) {
     let instrucaoSql = `
         SELECT fkNivel,
@@ -26,7 +24,6 @@ function buscarEvolucao(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-// ===== DASHBOARD: gráfico de barras (média por nível) =====
 function buscarMediaPorNivel(idUsuario) {
     let instrucaoSql = `
         SELECT nivel.nome AS nivel,
@@ -42,7 +39,6 @@ function buscarMediaPorNivel(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-// ===== DASHBOARD: KPIs (melhor, média e total) =====
 function buscarKpis(idUsuario) {
     let instrucaoSql = `
         SELECT ROUND(MAX(acertos * 100 / totalPerguntas)) AS melhorPorcentagem,
@@ -56,7 +52,6 @@ function buscarKpis(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-// ===== DASHBOARD: KPI nível atual =====
 function buscarNivelConcluido(idUsuario) {
     let instrucaoSql = `
         SELECT MAX(fkNivel) AS maiorNivelConcluido
